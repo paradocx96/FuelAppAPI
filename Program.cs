@@ -1,6 +1,13 @@
+using FuelAppAPI.Models;
+using FuelAppAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<FuelDatabaseSettings>(
+    builder.Configuration.GetSection("FuelDatabaseSettings"));
+
+builder.Services.AddSingleton<UserService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
