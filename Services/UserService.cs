@@ -29,12 +29,12 @@ namespace FuelAppAPI.Services
         public async Task<User?> GetAsync(string id) =>
             await _usersCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-        // Register User
-        public async Task CreateAsync(User newUser) =>
-            await _usersCollection.InsertOneAsync(newUser);
-
         // Update User
         public async Task UpdateAsync(string id, User updateUser) =>
             await _usersCollection.ReplaceOneAsync(x => x.Id == id, updateUser);
+        
+        // Delete User
+        public async Task RemoveAsync(string id) =>
+            await _usersCollection.DeleteOneAsync(x => x.Id == id);
     }
 }
