@@ -1,4 +1,4 @@
-using FuelAppAPI.Models;
+using FuelAppAPI.Models.Database;
 using FuelAppAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
