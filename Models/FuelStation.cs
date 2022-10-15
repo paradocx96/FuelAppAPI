@@ -19,8 +19,8 @@ namespace FuelAppAPI.Models
 
         public string? OpenStatus { get; set; }
         public int? QueueLength { get; set; }
-        public string? PetrolStauts { get; set; }
-        public string? DieselStauts { get; set; }
+        public string? PetrolStatus { get; set; }
+        public string? DieselStatus { get; set; }
     }
 }
 
