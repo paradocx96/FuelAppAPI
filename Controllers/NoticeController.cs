@@ -76,5 +76,19 @@ namespace FuelAppAPI.Controllers
 
             return NoContent();
         }
+        
+        // Get Notices By Station Id
+        [HttpGet("station/{id}")]
+        public async Task<ActionResult<List<Notice>>> GetNoticesByStationId(string id)
+        {
+            var notices = _noticeService.GetNoticesByStationId(id);
+
+            if (notices.Count == 0) 
+            {
+                return NotFound();
+            }
+
+            return notices;
+        }
     }
 }
