@@ -11,6 +11,7 @@ builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<NoticeService>();
 builder.Services.AddSingleton<AuthService>();
 builder.Services.AddSingleton<FeedbackService>();
+builder.Services.AddSingleton<FuelDatabaseSettings>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
