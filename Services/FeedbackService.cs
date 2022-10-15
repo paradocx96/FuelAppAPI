@@ -1,4 +1,5 @@
 ﻿using FuelAppAPI.Models;
+using FuelAppAPI.Models.Database;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
