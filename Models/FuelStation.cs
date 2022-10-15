@@ -21,6 +21,9 @@ namespace FuelAppAPI.Models
         public int? QueueLength { get; set; }
         public string? PetrolStatus { get; set; }
         public string? DieselStatus { get; set; }
+
+        public double? LocationLatitude { get; set; }
+        public double? LocationLongitude { get; set; }
     }
 }
 
