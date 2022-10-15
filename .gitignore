@@ -366,4 +366,4 @@ FodyWeavers.xsd
 .idea/
 
 #launchSettings
-Properties/launchSettings.json
+Properties/*
