@@ -8,7 +8,7 @@ namespace FuelAppAPI.DTO
      */
     public class FuelStationDto
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         public string? License { get; set; }
         public string? OwnerUsername { get; set; }
