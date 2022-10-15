@@ -15,8 +15,10 @@
 
   <ItemGroup>
     <None Remove="DTO\" />
+    <None Remove="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTO\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
 </Project>

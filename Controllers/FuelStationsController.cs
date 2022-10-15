@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FuelAppAPI.Converters;
 using FuelAppAPI.DTO;
 using FuelAppAPI.Models;
 using FuelAppAPI.Services;
@@ -90,14 +91,37 @@ namespace FuelAppAPI.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(string id, [FromBody] FuelStationDto fuelStationToUpdateDTO)
         {
+            var fuelStation = await _fuelStationService.GetAsync(id); //get the existing fuel station
+
+            if(fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            fuelStationToUpdateDTO.Id = id; //set the ID of the DTO
+            FuelStation fuelStationToUpdate = new FuelStation();
+            fuelStationToUpdate =  FuelStationDtoConverter.convertDtoToModelWithId(fuelStationToUpdateDTO); //convert the DTO to model
+            await _fuelStationService.UpdateAsync(id, fuelStationToUpdate);
+
+            return NoContent();
+
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            var fuelStation = _fuelStationService.GetAsync(id);
+
+            if(fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

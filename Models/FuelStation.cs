@@ -1,6 +1,13 @@
 ﻿using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+
+/*
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * 
+ * Model class for Fuel Station
+ */
 namespace FuelAppAPI.Models
 {
     public class FuelStation
