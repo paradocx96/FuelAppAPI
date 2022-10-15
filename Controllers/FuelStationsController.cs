@@ -28,6 +28,7 @@ namespace FuelAppAPI.Controllers
             _fuelStationService = fuelStationService;
         }
 
+        //endpoint to get all stations
         // GET: api/values
         [HttpGet]
         public async Task<List<FuelStation>> Get()
@@ -36,6 +37,7 @@ namespace FuelAppAPI.Controllers
             return fuelStations;
         }
 
+        //endpoint to get a station by id
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<FuelStation>> Get(string id)
@@ -52,6 +54,7 @@ namespace FuelAppAPI.Controllers
             return fuelStation; //return the fuel station
         }
 
+        //endpoint to create a station entry
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FuelStationDto receivedFuelStation)
@@ -89,6 +92,7 @@ namespace FuelAppAPI.Controllers
 
         }
 
+        //endpoint for updating details of a station
         // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody] FuelStationDto fuelStationToUpdateDTO)
@@ -109,6 +113,8 @@ namespace FuelAppAPI.Controllers
 
         }
 
+        //endpoint to delete the station
+        //consider archiving
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
@@ -123,6 +129,33 @@ namespace FuelAppAPI.Controllers
             await _fuelStationService.DeleteAsync(id);
             return NoContent();
         }
+
+        //endpoint to get the station by the owner's username
+        //GET api/GetStationByUsername/madura
+        [Route("[action]/{username}")]
+        [HttpGet]
+        public void GetStationByOwner(string ownerUsername)
+        {
+
+        }
+
+        //endpoint to increase queue count
+
+        //endpoint to decrase queue count
+
+        //endpoint to mark as petrol avaialable
+
+        //endpoint to mark as petrol unavaialable
+
+        //endpoint to mark as diesel avaialable
+
+        //endpoint to mark as diesel unavaialable
+
+        //endpoint to mark as station open
+
+        //endpoint to mark as station closed
+
+
     }
 }
 
