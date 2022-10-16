@@ -21,8 +21,8 @@ namespace FuelAppAPI.Services
             var mongoDatabase = mongoClient.GetDatabase(
                 fuelDatabaseSettings.Value.DatabaseName);
 
-            _noticesCollection = mongoDatabase.GetCollection<Notice>("Notice");
-            _collection = mongoDatabase.GetCollection<BsonDocument>("Notice");
+            _noticesCollection = mongoDatabase.GetCollection<Notice>(fuelDatabaseSettings.Value.NoticeCollectionName);
+            _collection = mongoDatabase.GetCollection<BsonDocument>(fuelDatabaseSettings.Value.NoticeCollectionName);
         }
 
         // Get All Notices
