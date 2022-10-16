@@ -31,6 +31,7 @@ namespace FuelAppAPI.Converters
             // initial status data may be dummy data
             fuelStation.OpenStatus = fuelStationDto.OpenStatus;
             fuelStation.PetrolQueueLength = fuelStationDto.PetrolQueueLength;
+            fuelStation.DieselQueueLength = fuelStationDto.DieselQueueLength;
             fuelStation.PetrolStatus = fuelStationDto.PetrolStatus;
             fuelStation.DieselStatus = fuelStationDto.DieselStatus;
 
@@ -62,6 +63,7 @@ namespace FuelAppAPI.Converters
             // initial status data may be dummy data
             fuelStation.OpenStatus = fuelStationDto.OpenStatus;
             fuelStation.PetrolQueueLength = fuelStationDto.PetrolQueueLength;
+            fuelStation.DieselQueueLength = fuelStationDto.DieselQueueLength;
             fuelStation.PetrolStatus = fuelStationDto.PetrolStatus;
             fuelStation.DieselStatus = fuelStationDto.DieselStatus;
 
@@ -93,6 +95,7 @@ namespace FuelAppAPI.Converters
             // initial status data may be dummy data
             fuelStationDto.OpenStatus = fuelStation.OpenStatus;
             fuelStationDto.PetrolQueueLength = fuelStation.PetrolQueueLength;
+            fuelStationDto.DieselQueueLength = fuelStation.DieselQueueLength;
             fuelStationDto.PetrolStatus = fuelStation.PetrolStatus;
             fuelStationDto.DieselStatus = fuelStation.DieselStatus;
 
@@ -126,6 +129,7 @@ namespace FuelAppAPI.Converters
             // initial status data may be dummy data
             fuelStationDto.OpenStatus = fuelStation.OpenStatus;
             fuelStationDto.PetrolQueueLength = fuelStation.PetrolQueueLength;
+            fuelStationDto.DieselQueueLength = fuelStation.DieselQueueLength;
             fuelStationDto.PetrolStatus = fuelStation.PetrolStatus;
             fuelStationDto.DieselStatus = fuelStation.DieselStatus;
 
