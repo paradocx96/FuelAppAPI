@@ -52,7 +52,7 @@ namespace FuelAppAPI.Services
         public async Task UpdateQueueLength(string id, int newLength)
         {
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
-            var update = Builders<FuelStation>.Update.Set("FuelStation", newLength); //set the update to the length
+            var update = Builders<FuelStation>.Update.Set("QueueLength", newLength); //set the update to the length
 
             await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
         }
@@ -64,7 +64,7 @@ namespace FuelAppAPI.Services
             int? newLength = station.QueueLength;
             newLength++; //increment the length
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
-            var update = Builders<FuelStation>.Update.Set("FuelStation", newLength); //set the update to the length
+            var update = Builders<FuelStation>.Update.Set("QueueLength", newLength); //set the update to the length
 
             await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
         }
@@ -76,7 +76,7 @@ namespace FuelAppAPI.Services
             int? newLength = station.QueueLength;
             newLength--; //decrement the length
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
-            var update = Builders<FuelStation>.Update.Set("FuelStation", newLength); //set the update to the length
+            var update = Builders<FuelStation>.Update.Set("QueueLength", newLength); //set the update to the length
             await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
         }
 

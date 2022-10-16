@@ -169,6 +169,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to increase queue count
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> IncreaseQueueLength(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
@@ -185,6 +187,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to decrase queue count
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> DecrementQueueLength(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
@@ -200,6 +204,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to mark as petrol avaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> MarkPetrolAsAvailable(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
@@ -215,6 +221,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to mark as petrol unavaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> MarkPetrolAsUnavailable(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
@@ -230,6 +238,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to mark as diesel avaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> MarkDieselAsAvailable(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
@@ -245,6 +255,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to mark as diesel unavaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> MarkDieselAsUnavailable(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
@@ -260,6 +272,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to mark as station open
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> MarkStationAsOpen(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
@@ -275,6 +289,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to mark as station closed
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult> MarkStationAsClosed(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
