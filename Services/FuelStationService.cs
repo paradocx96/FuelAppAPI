@@ -6,6 +6,7 @@ using System.Collections;
 using System.Dynamic;
 using FuelAppAPI.Models;
 using FuelAppAPI.Models.Database;
+using static MongoDB.Driver.WriteConcern;
 
 namespace FuelAppAPI.Services
 {
@@ -41,6 +42,73 @@ namespace FuelAppAPI.Services
         //delete a fuel station entry
         public async Task DeleteAsync(string id) =>
             await _fuelStationCollection.DeleteOneAsync(x => x.Id == id);
+
+
+        //get station by owner's username
+        public async Task GetStationByOwnerUsernameAsync(string username) =>
+            await _fuelStationCollection.Find(x => x.OwnerUsername == username).FirstOrDefaultAsync();
+
+        //update queue count
+        public async Task UpdateQueueCount(string id, int newLength)
+        {
+            var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
+            var update = Builders<FuelStation>.Update.Set("FuelStation", newLength); //set the update to the length
+
+            await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
+        }
+
+        //increment queue count
+        public async Task IncrementQueueCount(string id)
+        {
+            var station = await GetAsync(id);
+            int? newLength = station.QueueLength;
+            newLength++; //increment the length
+            var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
+            var update = Builders<FuelStation>.Update.Set("FuelStation", newLength); //set the update to the length
+
+            await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
+        }
+
+        //decrement queue count
+        public async Task DecrementQueueCount(string id)
+        {
+            var station = await GetAsync(id);
+            int? newLength = station.QueueLength;
+            newLength--; //decrement the length
+            var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
+            var update = Builders<FuelStation>.Update.Set("FuelStation", newLength); //set the update to the length
+            await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
+        }
+
+        //update petrol status
+        public async Task UpdatePetrolStatus(string id, string newStatus)
+        {
+            var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
+            var update = Builders<FuelStation>.Update.Set("PetrolStatus", newStatus); //set the update to the new petrol status
+
+            await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
+
+        }
+
+        //update diesel status
+        public async Task UpdateDieselStatus(string id, string newStatus)
+        {
+            var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
+            var update = Builders<FuelStation>.Update.Set("DieselStatus", newStatus); //set the update to the new diesel status
+
+            await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
+
+        }
+
+        //update station open status
+        public async Task UpdateStationOpenStatus(string id, string newStatus)
+        {
+            var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
+            var update = Builders<FuelStation>.Update.Set("OpenStatus", newStatus); //set the update to the new open status
+
+            await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
+
+        }
     }
 }
 
