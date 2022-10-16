@@ -171,7 +171,7 @@ namespace FuelAppAPI.Controllers
             return fuelStation;
         }
 
-        //endpoint to increase queue count
+        //endpoint to increase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
         public async Task<ActionResult> IncreasePetrolQueueLength(string id)
@@ -189,7 +189,7 @@ namespace FuelAppAPI.Controllers
             return NoContent();
         }
 
-        //endpoint to decrase queue count
+        //endpoint to decrase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
         public async Task<ActionResult> DecrementPetrolQueueLength(string id)
@@ -203,6 +203,40 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.DecrementPetrolQueueLength(id);
+            return NoContent();
+        }
+
+        //endpoint to increment diesel queue length
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> IncrementDieselQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.IncrementDieselQueueLength(id);
+            return NoContent();
+        }
+
+        //endpoint to decrement diesel queue length
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> DecrementDieselQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.DecrementDieselQueueLength(id);
             return NoContent();
         }
 
