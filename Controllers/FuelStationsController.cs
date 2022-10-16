@@ -152,7 +152,7 @@ namespace FuelAppAPI.Controllers
 
         //endpoint to get the station by the owner's username
         //GET api/GetStationByUsername/madura
-        [Route("[action]/{username}")]
+        [Route("[action]/{ownerUsername}")]
         [HttpGet]
         public async Task<ActionResult<FuelStation>> GetStationByOwner(string ownerUsername)
         {
