@@ -30,7 +30,7 @@ namespace FuelAppAPI.Converters
             // populate fuel station status data with initial data
             // initial status data may be dummy data
             fuelStation.OpenStatus = fuelStationDto.OpenStatus;
-            fuelStation.PetrolQueueLength = fuelStationDto.QueueLength;
+            fuelStation.PetrolQueueLength = fuelStationDto.PetrolQueueLength;
             fuelStation.PetrolStatus = fuelStationDto.PetrolStatus;
             fuelStation.DieselStatus = fuelStationDto.DieselStatus;
 
@@ -61,7 +61,7 @@ namespace FuelAppAPI.Converters
             // populate fuel station status data with initial data
             // initial status data may be dummy data
             fuelStation.OpenStatus = fuelStationDto.OpenStatus;
-            fuelStation.PetrolQueueLength = fuelStationDto.QueueLength;
+            fuelStation.PetrolQueueLength = fuelStationDto.PetrolQueueLength;
             fuelStation.PetrolStatus = fuelStationDto.PetrolStatus;
             fuelStation.DieselStatus = fuelStationDto.DieselStatus;
 
@@ -92,7 +92,7 @@ namespace FuelAppAPI.Converters
             // populate fuel station status data with initial data
             // initial status data may be dummy data
             fuelStationDto.OpenStatus = fuelStation.OpenStatus;
-            fuelStationDto.QueueLength = fuelStation.PetrolQueueLength;
+            fuelStationDto.PetrolQueueLength = fuelStation.PetrolQueueLength;
             fuelStationDto.PetrolStatus = fuelStation.PetrolStatus;
             fuelStationDto.DieselStatus = fuelStation.DieselStatus;
 
@@ -125,7 +125,7 @@ namespace FuelAppAPI.Converters
             // populate fuel station status data with initial data
             // initial status data may be dummy data
             fuelStationDto.OpenStatus = fuelStation.OpenStatus;
-            fuelStationDto.QueueLength = fuelStation.PetrolQueueLength;
+            fuelStationDto.PetrolQueueLength = fuelStation.PetrolQueueLength;
             fuelStationDto.PetrolStatus = fuelStation.PetrolStatus;
             fuelStationDto.DieselStatus = fuelStation.DieselStatus;
 
