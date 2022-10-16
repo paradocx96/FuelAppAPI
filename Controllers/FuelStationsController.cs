@@ -20,12 +20,14 @@ namespace FuelAppAPI.Controllers
     [ApiController]
     public class FuelStationsController : ControllerBase
     {
-        private readonly FuelStationService _fuelStationService; //fuel station service 
+        private readonly FuelStationService _fuelStationService; //fuel station service
+        private readonly FuelStationArchiveService _fuelStationArchiveService; // fuel station archive service
 
         //constructor
-        public FuelStationsController(FuelStationService fuelStationService)
+        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService)
         {
             _fuelStationService = fuelStationService;
+            _fuelStationArchiveService = fuelStationArchiveService;
         }
 
         //endpoint to get all stations
@@ -119,14 +121,32 @@ namespace FuelAppAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var fuelStation = _fuelStationService.GetAsync(id);
+            FuelStation fuelStation = await _fuelStationService.GetAsync(id);
 
             if(fuelStation is null)
             {
                 return NotFound();
             }
 
+            
+            //create fuel station archive object
+            FuelStationArchive fuelStationArchive = new FuelStationArchive();
+
+            //assign attributes to the archive object
+            fuelStationArchive.License = fuelStation.License;
+            fuelStationArchive.OwnerUsername = fuelStation.OwnerUsername;
+            fuelStationArchive.StationName = fuelStation.StationName;
+            fuelStationArchive.StationAddress = fuelStation.StationAddress;
+            fuelStationArchive.StationPhoneNumber = fuelStation.StationPhoneNumber;
+            fuelStationArchive.StationEmail = fuelStation.StationEmail;
+            fuelStationArchive.StationWebsite = fuelStation.StationWebsite;
+
+            // create archive entry
+            await _fuelStationArchiveService.CreateAsync(fuelStationArchive);
+
+            //delete fuel station entry from main collection
             await _fuelStationService.DeleteAsync(id);
+
             return NoContent();
         }
 
