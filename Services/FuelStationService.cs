@@ -69,7 +69,7 @@ namespace FuelAppAPI.Services
         public async Task IncrementQueueLength(string id)
         {
             var station = await GetAsync(id);
-            int? newLength = station.QueueLength;
+            int? newLength = station.PetrolQueueLength;
             newLength++; //increment the length
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
             var update = Builders<FuelStation>.Update.Set("QueueLength", newLength); //set the update to the length
@@ -81,7 +81,7 @@ namespace FuelAppAPI.Services
         public async Task DecrementQueueLength(string id)
         {
             var station = await GetAsync(id);
-            int? newLength = station.QueueLength;
+            int? newLength = station.PetrolQueueLength;
             newLength--; //decrement the length
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
             var update = Builders<FuelStation>.Update.Set("QueueLength", newLength); //set the update to the length
