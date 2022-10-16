@@ -57,16 +57,16 @@ namespace FuelAppAPI.Services
             await _fuelStationCollection.Find(x => x.OwnerUsername == username).FirstOrDefaultAsync();
 
         //update queue count
-        public async Task UpdateQueueLength(string id, int newLength)
+        public async Task UpdatePetrolQueueLength(string id, int newLength)
         {
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
-            var update = Builders<FuelStation>.Update.Set("QueueLength", newLength); //set the update to the length
+            var update = Builders<FuelStation>.Update.Set("PetrolQueueLength", newLength); //set the update to the length
 
             await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
         }
 
         //increment queue count
-        public async Task IncrementQueueLength(string id)
+        public async Task IncrementPetrolQueueLength(string id)
         {
             var station = await GetAsync(id);
             int? newLength = station.PetrolQueueLength;
@@ -78,7 +78,7 @@ namespace FuelAppAPI.Services
         }
 
         //decrement queue count
-        public async Task DecrementQueueLength(string id)
+        public async Task DecrementPetrolQueueLength(string id)
         {
             var station = await GetAsync(id);
             int? newLength = station.PetrolQueueLength;
