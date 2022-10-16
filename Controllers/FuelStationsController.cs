@@ -174,7 +174,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to increase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> IncreasePetrolQueueLength(string id)
+        public async Task<ActionResult> IncrementPetrolQueueLength(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
 
