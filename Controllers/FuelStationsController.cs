@@ -134,27 +134,140 @@ namespace FuelAppAPI.Controllers
         //GET api/GetStationByUsername/madura
         [Route("[action]/{username}")]
         [HttpGet]
-        public void GetStationByOwner(string ownerUsername)
+        public async Task<ActionResult<FuelStation>> GetStationByOwner(string ownerUsername)
         {
+            var fuelStation = await _fuelStationService.GetStationByOwnerUsernameAsync(ownerUsername);
 
+            //return not found of no fuel station is found for the username
+            if(fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            //return the fuel station
+            return fuelStation;
         }
 
         //endpoint to increase queue count
+        public async Task<ActionResult> IncreaseQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.IncrementQueueLength(id); //incrementCount
+
+            return NoContent();
+        }
 
         //endpoint to decrase queue count
+        public async Task<ActionResult> DecrementQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.DecrementQueueLength(id);
+            return NoContent();
+        }
 
         //endpoint to mark as petrol avaialable
+        public async Task<ActionResult> MarkPetrolAsAvailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdatePetrolStatus(id, "available");
+            return NoContent();
+        }
 
         //endpoint to mark as petrol unavaialable
+        public async Task<ActionResult> MarkPetrolAsUnavailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdatePetrolStatus(id, "unavailable");
+            return NoContent();
+        }
 
         //endpoint to mark as diesel avaialable
+        public async Task<ActionResult> MarkDieselAsAvailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateDieselStatus(id, "available");
+            return NoContent();
+        }
 
         //endpoint to mark as diesel unavaialable
+        public async Task<ActionResult> MarkDieselAsUnavailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateDieselStatus(id, "unavailable");
+            return NoContent();
+        }
 
         //endpoint to mark as station open
+        public async Task<ActionResult> MarkStationAsOpen(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateStationOpenStatus(id, "open");
+            return NoContent();
+        }
 
         //endpoint to mark as station closed
+        public async Task<ActionResult> MarkStationAsClosed(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
 
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateStationOpenStatus(id, "closed");
+            return NoContent();
+        }
 
     }
 }
