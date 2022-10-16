@@ -365,5 +365,8 @@ FodyWeavers.xsd
 # Rider
 .idea/
 
-#launchSettings
-Properties/*
+# LaunchSettings
+Properties
+Properties/
+Properties/*.json
+Properties/launchSettings.json
