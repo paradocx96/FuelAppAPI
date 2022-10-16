@@ -78,7 +78,7 @@ namespace FuelAppAPI.Controllers
             // populate fuel station status data with initial data
             // initial status data may be dummy data
             newFuelStation.OpenStatus = receivedFuelStation.OpenStatus;
-            newFuelStation.PetrolQueueLength = receivedFuelStation.QueueLength;
+            newFuelStation.PetrolQueueLength = receivedFuelStation.PetrolQueueLength;
             newFuelStation.PetrolStatus = receivedFuelStation.PetrolStatus;
             newFuelStation.DieselStatus = receivedFuelStation.DieselStatus;
 
@@ -174,7 +174,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to increase queue count
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> IncreaseQueueLength(string id)
+        public async Task<ActionResult> IncreasePetrolQueueLength(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
 
@@ -184,7 +184,7 @@ namespace FuelAppAPI.Controllers
                 return NotFound();
             }
 
-            await _fuelStationService.IncrementQueueLength(id); //incrementCount
+            await _fuelStationService.IncrementPetrolQueueLength(id); //incrementCount
 
             return NoContent();
         }
@@ -192,7 +192,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to decrase queue count
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> DecrementQueueLength(string id)
+        public async Task<ActionResult> DecrementPetrolQueueLength(string id)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
 
@@ -202,7 +202,7 @@ namespace FuelAppAPI.Controllers
                 return NotFound();
             }
 
-            await _fuelStationService.DecrementQueueLength(id);
+            await _fuelStationService.DecrementPetrolQueueLength(id);
             return NoContent();
         }
 
