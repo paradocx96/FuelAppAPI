@@ -93,6 +93,14 @@ namespace FuelAppAPI.Services
             var station = await GetAsync(id);
             int? newLength = station.PetrolQueueLength;
             newLength--; //decrement the length
+
+            //check if decrementing takes length below zero
+            if(newLength < 0)
+            {
+                //set default length to zeqo
+                newLength = 0;
+            }
+
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
             var update = Builders<FuelStation>.Update.Set("PetrolQueueLength", newLength); //set the update to the length
             await _fuelStationCollection.FindOneAndUpdateAsync(filter, update);
@@ -116,6 +124,14 @@ namespace FuelAppAPI.Services
             var station = await GetAsync(id);
             int? newLength = station.DieselQueueLength;
             newLength--; //increment the length
+
+            //check if decrementing takes length below zero
+            if (newLength < 0)
+            {
+                //set default length to zeqo
+                newLength = 0;
+            }
+
             var filter = Builders<FuelStation>.Filter.Eq("Id", id); //set the filter to get the station by id
             var update = Builders<FuelStation>.Update.Set("DieselQueueLength", newLength); //set the update to the length
 
