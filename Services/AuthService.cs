@@ -20,8 +20,8 @@ namespace FuelAppAPI.Services
             var mongoClient = new MongoClient(fuelDatabaseSettings.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(fuelDatabaseSettings.Value.DatabaseName);
 
-            _collection = mongoDatabase.GetCollection<BsonDocument>("User");
-            _usersCollection = mongoDatabase.GetCollection<User>("User");
+            _collection = mongoDatabase.GetCollection<BsonDocument>(fuelDatabaseSettings.Value.UserCollectionName);
+            _usersCollection = mongoDatabase.GetCollection<User>(fuelDatabaseSettings.Value.UserCollectionName);
         }
 
         // User Login
