@@ -11,8 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 /*
-IT19014128
-A.M.W.W.R.L. Wataketiya
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * Controller for the fuel stations
+ * Endpoints are handled here
  */
 namespace FuelAppAPI.Controllers
 {
@@ -116,7 +118,8 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to delete the station
-        //consider archiving
+        //the main entry is deleted
+        //an archive entry is added in the database
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
