@@ -19,7 +19,8 @@ namespace FuelAppAPI.DTO
         public string? StationWebsite { get; set; }
 
         public string? OpenStatus { get; set; }
-        public int? QueueLength { get; set; }
+        public int? PetrolQueueLength { get; set; }
+        public int? DieselQueueLength { get; set; }
         public string? PetrolStatus { get; set; }
         public string? DieselStatus { get; set; }
 

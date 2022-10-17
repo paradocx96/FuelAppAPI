@@ -11,8 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 /*
-IT19014128
-A.M.W.W.R.L. Wataketiya
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * Controller for the fuel stations
+ * Endpoints are handled here
  */
 namespace FuelAppAPI.Controllers
 {
@@ -20,14 +22,17 @@ namespace FuelAppAPI.Controllers
     [ApiController]
     public class FuelStationsController : ControllerBase
     {
-        private readonly FuelStationService _fuelStationService; //fuel station service 
+        private readonly FuelStationService _fuelStationService; //fuel station service
+        private readonly FuelStationArchiveService _fuelStationArchiveService; // fuel station archive service
 
         //constructor
-        public FuelStationsController(FuelStationService fuelStationService)
+        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService)
         {
             _fuelStationService = fuelStationService;
+            _fuelStationArchiveService = fuelStationArchiveService;
         }
 
+        //endpoint to get all stations
         // GET: api/values
         [HttpGet]
         public async Task<List<FuelStation>> Get()
@@ -36,6 +41,7 @@ namespace FuelAppAPI.Controllers
             return fuelStations;
         }
 
+        //endpoint to get a station by id
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<FuelStation>> Get(string id)
@@ -52,6 +58,7 @@ namespace FuelAppAPI.Controllers
             return fuelStation; //return the fuel station
         }
 
+        //endpoint to create a station entry
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FuelStationDto receivedFuelStation)
@@ -71,7 +78,7 @@ namespace FuelAppAPI.Controllers
             // populate fuel station status data with initial data
             // initial status data may be dummy data
             newFuelStation.OpenStatus = receivedFuelStation.OpenStatus;
-            newFuelStation.QueueLength = receivedFuelStation.QueueLength;
+            newFuelStation.PetrolQueueLength = receivedFuelStation.PetrolQueueLength;
             newFuelStation.PetrolStatus = receivedFuelStation.PetrolStatus;
             newFuelStation.DieselStatus = receivedFuelStation.DieselStatus;
 
@@ -89,6 +96,7 @@ namespace FuelAppAPI.Controllers
 
         }
 
+        //endpoint for updating details of a station
         // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody] FuelStationDto fuelStationToUpdateDTO)
@@ -109,20 +117,231 @@ namespace FuelAppAPI.Controllers
 
         }
 
+        //endpoint to delete the station
+        //the main entry is deleted
+        //an archive entry is added in the database
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var fuelStation = _fuelStationService.GetAsync(id);
+            FuelStation fuelStation = await _fuelStationService.GetAsync(id);
 
             if(fuelStation is null)
             {
                 return NotFound();
             }
 
+            
+            //create fuel station archive object
+            FuelStationArchive fuelStationArchive = new FuelStationArchive();
+
+            //assign attributes to the archive object
+            fuelStationArchive.License = fuelStation.License;
+            fuelStationArchive.OwnerUsername = fuelStation.OwnerUsername;
+            fuelStationArchive.StationName = fuelStation.StationName;
+            fuelStationArchive.StationAddress = fuelStation.StationAddress;
+            fuelStationArchive.StationPhoneNumber = fuelStation.StationPhoneNumber;
+            fuelStationArchive.StationEmail = fuelStation.StationEmail;
+            fuelStationArchive.StationWebsite = fuelStation.StationWebsite;
+
+            // create archive entry
+            await _fuelStationArchiveService.CreateAsync(fuelStationArchive);
+
+            //delete fuel station entry from main collection
             await _fuelStationService.DeleteAsync(id);
+
             return NoContent();
         }
+
+        //endpoint to get the station by the owner's username
+        //GET api/GetStationByUsername/madura
+        [Route("[action]/{ownerUsername}")]
+        [HttpGet]
+        public async Task<ActionResult<FuelStation>> GetStationByOwner(string ownerUsername)
+        {
+            var fuelStation = await _fuelStationService.GetStationByOwnerUsernameAsync(ownerUsername);
+
+            //return not found of no fuel station is found for the username
+            if(fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            //return the fuel station
+            return fuelStation;
+        }
+
+        //endpoint to increase petrol queue length
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> IncrementPetrolQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.IncrementPetrolQueueLength(id); //incrementCount
+
+            return NoContent();
+        }
+
+        //endpoint to decrase petrol queue length
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> DecrementPetrolQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.DecrementPetrolQueueLength(id);
+            return NoContent();
+        }
+
+        //endpoint to increment diesel queue length
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> IncrementDieselQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.IncrementDieselQueueLength(id);
+            return NoContent();
+        }
+
+        //endpoint to decrement diesel queue length
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> DecrementDieselQueueLength(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.DecrementDieselQueueLength(id);
+            return NoContent();
+        }
+
+        //endpoint to mark as petrol avaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> MarkPetrolAsAvailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdatePetrolStatus(id, "available");
+            return NoContent();
+        }
+
+        //endpoint to mark as petrol unavaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> MarkPetrolAsUnavailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdatePetrolStatus(id, "unavailable");
+            return NoContent();
+        }
+
+        //endpoint to mark as diesel avaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> MarkDieselAsAvailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateDieselStatus(id, "available");
+            return NoContent();
+        }
+
+        //endpoint to mark as diesel unavaialable
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> MarkDieselAsUnavailable(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateDieselStatus(id, "unavailable");
+            return NoContent();
+        }
+
+        //endpoint to mark as station open
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> MarkStationAsOpen(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateStationOpenStatus(id, "open");
+            return NoContent();
+        }
+
+        //endpoint to mark as station closed
+        [Route("[action]/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> MarkStationAsClosed(string id)
+        {
+            var fuelStation = await _fuelStationService.GetAsync(id);
+
+            //return not found of no fuel station is found for the username
+            if (fuelStation is null)
+            {
+                return NotFound();
+            }
+
+            await _fuelStationService.UpdateStationOpenStatus(id, "closed");
+            return NoContent();
+        }
+
     }
 }
 
