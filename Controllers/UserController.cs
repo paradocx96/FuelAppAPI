@@ -14,16 +14,7 @@ namespace FuelAppAPI.Controllers
 
         public UserController(UserService userService) =>
             _userService = userService;
-
-        // Register User
-        [HttpPost]
-        public async Task<IActionResult> RegisterUser(User user)
-        {
-            await _userService.CreateAsync(user);
-
-            return CreatedAtAction(nameof(GetUserbyId), new { id = user.Id }, user);
-        }
-
+        
         // Get All Users
         [HttpGet]
         public async Task<List<User>> GetUsers() =>
@@ -31,7 +22,7 @@ namespace FuelAppAPI.Controllers
 
         // Get User By Id
         [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<User>> GetUserbyId(string id)
+        public async Task<ActionResult<User>> GetUserById(string id)
         {
             var user = await _userService.GetAsync(id);
 
@@ -58,6 +49,22 @@ namespace FuelAppAPI.Controllers
 
             await _userService.UpdateAsync(id, updatedUser);
 
+            return NoContent();
+        }
+        
+        // Delete User
+        [HttpDelete("{id:length(24)}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userService.GetAsync(id);
+        
+            if (user is null)
+            {
+                return NotFound();
+            }
+        
+            await _userService.RemoveAsync(id);
+        
             return NoContent();
         }
     }
