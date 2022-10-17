@@ -54,9 +54,10 @@ namespace FuelAppAPI.Services
                 {
                     Id = document[0].ToString()!,
                     StationId = document[1].ToString()!,
-                    Username = document[2].ToString()!,
-                    Description = document[3].ToString()!,
-                    CreateAt = document[4].ToString()!
+                    Subject = document[2].ToString()!,
+                    Username = document[3].ToString()!,
+                    Description = document[4].ToString()!,
+                    CreateAt = document[5].ToString()!
                 }) ;
             }
 
