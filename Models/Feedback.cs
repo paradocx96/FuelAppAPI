@@ -9,6 +9,7 @@ namespace FuelAppAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public string StationId { get; set; } = null!;
+        public string Subject { get; set; } = null!;
         public string Username { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string CreateAt { get; set; } = null!;
