@@ -19,8 +19,8 @@ namespace FuelAppAPI.Services
             var monogClient = new MongoClient(fuelDatabaseSettings.Value.ConnectionString);
             var mongoDatabase = monogClient.GetDatabase(fuelDatabaseSettings.Value.DatabaseName);
 
-            _feedbackCollection = mongoDatabase.GetCollection<Feedback>("Feedback");
-            _collection = mongoDatabase.GetCollection<BsonDocument>("Feedback");
+            _feedbackCollection = mongoDatabase.GetCollection<Feedback>(fuelDatabaseSettings.Value.FeedbackCollectionName);
+            _collection = mongoDatabase.GetCollection<BsonDocument>(fuelDatabaseSettings.Value.FeedbackCollectionName);
         }
 
         //Get All Feedbacks
