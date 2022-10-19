@@ -79,6 +79,7 @@ namespace FuelAppAPI.Controllers
             // initial status data may be dummy data
             newFuelStation.OpenStatus = receivedFuelStation.OpenStatus;
             newFuelStation.PetrolQueueLength = receivedFuelStation.PetrolQueueLength;
+            newFuelStation.DieselQueueLength = receivedFuelStation.DieselQueueLength;
             newFuelStation.PetrolStatus = receivedFuelStation.PetrolStatus;
             newFuelStation.DieselStatus = receivedFuelStation.DieselStatus;
 
