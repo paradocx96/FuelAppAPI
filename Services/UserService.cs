@@ -19,7 +19,7 @@ namespace FuelAppAPI.Services
             var mongoDatabase = mongoClient.GetDatabase(
                 fuelDatabaseSettings.Value.DatabaseName);
 
-            _usersCollection = mongoDatabase.GetCollection<User>("User");
+            _usersCollection = mongoDatabase.GetCollection<User>(fuelDatabaseSettings.Value.UserCollectionName);
         }
 
         // Get Users
