@@ -27,5 +27,10 @@ namespace FuelAppAPI.Services
         public async Task CreateFavouriteAsync(Favourite newfavourite) =>
             await _favouriteCollection.InsertOneAsync(newfavourite);
 
+        //Get favourite by username
+        public async Task<Favourite> GetFavouriteByUsernameAsync(string username) =>
+            await _favouriteCollection.Find(x => x.Username == username).FirstOrDefaultAsync();
+
+
     }
 }
