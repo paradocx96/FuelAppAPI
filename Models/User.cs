@@ -1,6 +1,11 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
+/*
+* IT19180526
+* S.A.N.L.D. Chandrasiri
+* Model class for User
+*/
 namespace FuelAppAPI.Models
 {
     public class User
@@ -9,7 +14,6 @@ namespace FuelAppAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
-        [BsonElement("Username")]
         public string Username { get; set; } = null!;
 
         public string FullName { get; set; } = null!;

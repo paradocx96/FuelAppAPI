@@ -7,6 +7,11 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Dynamic;
 
+/*
+* IT19180526
+* S.A.N.L.D. Chandrasiri
+* Service class for Auth (Login/Registration) that handle database operation 
+*/
 namespace FuelAppAPI.Services
 {
     public class AuthService

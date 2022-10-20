@@ -1,20 +1,20 @@
 /*
 * IT19180526
 * S.A.N.L.D. Chandrasiri
-* Model class for Auth Response (Login)
+* Data Transfer Object for User
 */
 
-namespace FuelAppAPI.Models.Auth
+namespace FuelAppAPI.DTO
 {
-    public class AuthenticateResponse
+    public class UserDto
     {
-        public string? Id { get; set; }
-
         public string Username { get; set; } = null!;
 
         public string FullName { get; set; } = null!;
 
         public string Email { get; set; } = null!;
+
+        public string Password { get; set; } = null!;
 
         public string Role { get; set; } = null!;
     }

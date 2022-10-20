@@ -5,6 +5,11 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
+/*
+* IT19180526
+* S.A.N.L.D. Chandrasiri
+* Service class for Notice that handle database operation 
+*/
 namespace FuelAppAPI.Services
 {
     public class NoticeService
@@ -49,6 +54,30 @@ namespace FuelAppAPI.Services
         public List<Notice> GetNoticesByStationId(string id)
         {
             var filter = Builders<BsonDocument>.Filter.Eq("StationId", id);
+            var cursor = _collection.Find(filter).ToCursor();
+
+            var notices = new List<Notice>();
+            
+            foreach (var document in cursor.ToEnumerable())
+            {
+                notices.Add(new Notice
+                {
+                    Id = document[0].ToString()!,
+                    StationId = document[1].ToString()!,
+                    Title = document[2].ToString()!,
+                    Description = document[3].ToString()!,
+                    Author = document[4].ToString()!,
+                    CreateAt = document[5].ToString()!
+                });
+            }
+
+            return notices;
+        }
+        
+        // Get All Notices By Author (username)
+        public List<Notice> GetNoticesByAuthor(string author)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("Author", author);
             var cursor = _collection.Find(filter).ToCursor();
 
             var notices = new List<Notice>();
