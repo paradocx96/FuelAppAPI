@@ -12,6 +12,7 @@ namespace FuelAppAPI.Services
         private readonly IMongoCollection<Favourite> _favouriteCollection;
         private readonly IMongoCollection<BsonDocument> _collection;
 
+        //Intialize database configuration
         public FavouriteService(IOptions<FuelDatabaseSettings> fuelDatabaseSettings) {
 
             var monogClient = new MongoClient(fuelDatabaseSettings.Value.ConnectionString);
@@ -21,5 +22,10 @@ namespace FuelAppAPI.Services
             _collection = mongoDatabase.GetCollection<BsonDocument>(fuelDatabaseSettings.Value.FavouriteCollectionName);
 
         }
+
+        //Create a new favourite
+        public async Task CreateFavouriteAsync(Favourite newfavourite) =>
+            await _favouriteCollection.InsertOneAsync(newfavourite);
+
     }
 }
