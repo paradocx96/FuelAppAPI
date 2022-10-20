@@ -55,7 +55,20 @@ namespace FuelAppAPI.Controllers
         [HttpGet]
         public async Task<List<Favourite>> GetAllFavourites() => await _favouriteService.GetAllFavouriteAsync();
 
-       
+        // Get favourite by username
+        [HttpGet("GetAllFavouriteByUsername/{username}")]
+        public async Task<List<Favourite>> GetAllFavouriteByUsername(string username)
+        {
+
+            var favouriteObj = await _favouriteService.GetAllFavouriteByUsernameAsync(username);
+
+            if (favouriteObj is null)
+            {
+                return null;
+            }
+
+            return favouriteObj;
+        }
 
     }
 }
