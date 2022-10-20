@@ -172,6 +172,25 @@ namespace FuelAppAPI.Controllers
             return fuelStation;
         }
 
+        //endpoint to get all the stations for a owner's username
+        //GET api/GetAllStationsByOwnerUsername/madura
+        [Route("[action]/{ownerUsername}")]
+        [HttpGet]
+        public async Task<ActionResult<List<FuelStationDto>>> GetAllStationsByOwnerUsername(string ownerUsername)
+        {
+            List<FuelStation> fuelStations = await _fuelStationService.GetAllStationsByOwnerUsernameAsync(ownerUsername); //retrieve all fuel stations for owner
+            List<FuelStationDto> fuelStationDtos = new List<FuelStationDto>();
+
+            //go through all the fuel station model objects
+            foreach(FuelStation fuelStation in fuelStations)
+            {
+                FuelStationDto fuelStationDto = FuelStationDtoConverter.convertModelToDtoWithId(fuelStation);//convert the model to a DTO
+                fuelStationDtos.Add(fuelStationDto); //add the DTO to the DTO list
+            }
+
+            return fuelStationDtos;
+        }
+
         //endpoint to increase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]

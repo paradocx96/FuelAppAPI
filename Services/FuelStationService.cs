@@ -56,6 +56,10 @@ namespace FuelAppAPI.Services
         public async Task<FuelStation> GetStationByOwnerUsernameAsync(string username) =>
             await _fuelStationCollection.Find(x => x.OwnerUsername == username).FirstOrDefaultAsync();
 
+        //get all the stations for a owner username
+        public async Task<List<FuelStation>> GetAllStationsByOwnerUsernameAsync(string username) =>
+            await _fuelStationCollection.Find(x => x.OwnerUsername == username).ToListAsync();
+
         //update petrol queue length
         public async Task UpdatePetrolQueueLength(string id, int newLength)
         {
