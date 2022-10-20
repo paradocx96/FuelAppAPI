@@ -28,6 +28,15 @@ namespace FuelAppAPI.Controllers
             return favouriteObj;
         }
 
-       
+        // Create new Favourite
+        [HttpPost]
+        public async Task<IActionResult> CreateFavourite(Favourite newfavourite)
+        {
+            await _favouriteService.CreateFavouriteAsync(newfavourite);
+
+            return CreatedAtAction(nameof(GetFavouriteById), new { id = newfavourite.Id }, newfavourite);
+        }
+
+
     }
 }
