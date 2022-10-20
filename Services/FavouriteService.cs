@@ -31,6 +31,8 @@ namespace FuelAppAPI.Services
         public async Task<Favourite> GetFavouriteByUsernameAsync(string username) =>
             await _favouriteCollection.Find(x => x.Username == username).FirstOrDefaultAsync();
 
+        // Get favourite By Id
+        public async Task<Favourite?> GetFavouriteByIdAsync(string id) => await _favouriteCollection.Find(res => res.Id == id).FirstOrDefaultAsync();
 
     }
 }
