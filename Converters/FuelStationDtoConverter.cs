@@ -116,7 +116,7 @@ namespace FuelAppAPI.Converters
             FuelStationDto fuelStationDto = new FuelStationDto();
 
             // populate fuel station data
-            fuelStationDto.Id = fuelStationDto.Id;
+            fuelStationDto.Id = fuelStation.Id;
             fuelStationDto.License = fuelStation.License;
             fuelStationDto.OwnerUsername = fuelStation.OwnerUsername;
             fuelStationDto.StationName = fuelStation.StationName;
