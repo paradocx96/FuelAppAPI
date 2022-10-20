@@ -1,19 +1,13 @@
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
 /*
 * IT19180526
 * S.A.N.L.D. Chandrasiri
-* Model class for Notice
+* Data Transfer Object for Notice
 */
-namespace FuelAppAPI.Models
-{
-    public class Notice
-    {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
 
+namespace FuelAppAPI.DTO
+{
+    public class NoticeDto
+    {
         public string StationId { get; set; } = null!;
 
         public string Title { get; set; } = null!;
