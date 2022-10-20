@@ -1,14 +1,21 @@
-namespace FuelAppAPI.Models.Auth;
+/*
+* IT19180526
+* S.A.N.L.D. Chandrasiri
+* Model class for Auth Response (Login)
+*/
 
-public class AuthenticateResponse
+namespace FuelAppAPI.Models.Auth
 {
-    public string? Id { get; set; }
-    
-    public string Username { get; set; } = null!;
-    
-    public string FullName { get; set; } = null!;
-    
-    public string Email { get; set; } = null!;
-    
-    public string Role { get; set; } = null!;
+    public class AuthenticateResponse
+    {
+        public string? Id { get; set; }
+
+        public string Username { get; set; } = null!;
+
+        public string FullName { get; set; } = null!;
+
+        public string Email { get; set; } = null!;
+
+        public string Role { get; set; } = null!;
+    }
 }
