@@ -37,6 +37,19 @@ namespace FuelAppAPI.Controllers
             return CreatedAtAction(nameof(GetFavouriteById), new { id = newfavourite.Id }, newfavourite);
         }
 
+        // Get favourite by username
+        public async Task<ActionResult<Favourite>> GetFavouriteByUsername(string username) { 
+        
+            var favouriteObj  = await _favouriteService.GetFavouriteByUsernameAsync(username);
+
+            if(favouriteObj is null)
+            {
+                return NoContent();
+            }
+
+            return favouriteObj;
+        }
+
 
     }
 }
