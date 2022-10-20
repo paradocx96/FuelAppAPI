@@ -15,7 +15,8 @@ namespace FuelAppAPI.Controllers
         public FavouriteController(FavouriteService newfavouriteService) => _favouriteService = newfavouriteService;
 
         // Get favourite by Id
-        [HttpGet("GetFavouriteById/{id}")]
+        [Route("[action]/{id}")]
+        [HttpGet]
         public async Task<ActionResult<Favourite>> GetFavouriteById(string id)
         {
             var favouriteObj = await _favouriteService.GetFavouriteByIdAsync(id);
@@ -38,7 +39,8 @@ namespace FuelAppAPI.Controllers
         }
 
         // Get favourite by username
-        [HttpGet("GetFavouriteByUsername/{username}")]
+        [Route("[action]/{username}")]
+        [HttpGet]
         public async Task<ActionResult<Favourite>> GetFavouriteByUsername(string username) { 
         
             var favouriteObj  = await _favouriteService.GetFavouriteByUsernameAsync(username);
@@ -56,7 +58,8 @@ namespace FuelAppAPI.Controllers
         public async Task<List<Favourite>> GetAllFavourites() => await _favouriteService.GetAllFavouriteAsync();
 
         // Get favourite by username
-        [HttpGet("GetAllFavouriteByUsername/{username}")]
+        [Route("[action]/{username}")]
+        [HttpGet]
         public async Task<List<Favourite>> GetAllFavouriteByUsername(string username)
         {
 
