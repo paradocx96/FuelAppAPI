@@ -11,8 +11,13 @@ namespace FuelAppAPI.Controllers
     {
 
         private readonly FavouriteService _favouriteService;
+        private readonly FuelStationService _fuelStationService;
 
-        public FavouriteController(FavouriteService newfavouriteService) => _favouriteService = newfavouriteService;
+        public FavouriteController(FavouriteService newfavouriteService, FuelStationService newfuelStationService)
+        {
+            _favouriteService = newfavouriteService;
+            _fuelStationService = newfuelStationService;
+        } 
 
         // Get favourite by Id
         [Route("[action]/{id}")]
@@ -73,5 +78,24 @@ namespace FuelAppAPI.Controllers
             return favouriteObj;
         }
 
+        // Get favourite by username
+        [Route("[action]/{username}")]
+        [HttpGet]
+        public async Task<List<FuelStation>> GetAllFavouriteByUsernameWithStationId(string username)
+        {
+
+            List<Favourite> favourites = await _favouriteService.GetAllFavouriteByUsernameAsync(username);
+            List<FuelStation> fuelStations = new List<FuelStation>();
+
+            foreach (Favourite favourite in favourites) 
+            {
+                var id = favourite.StationId;
+                var fuelStation = await _fuelStationService.GetAsync(id);
+
+                fuelStations.Add(fuelStation);
+            }
+
+            return fuelStations;
+        }
     }
 }
