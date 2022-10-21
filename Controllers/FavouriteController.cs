@@ -97,5 +97,23 @@ namespace FuelAppAPI.Controllers
 
             return fuelStations;
         }
+
+        // Delete favourite by station Id
+        [Route("[action]/{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFavouriteByStaionId(string id) {
+
+            var response = await _favouriteService.GetFavouriteByStationId(id);
+            if(response is null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                await _favouriteService.DeleteFavouriteAsync(id);
+                return Ok("Successfully Deleted");
+            }
+
+        }
     }
 }
