@@ -38,9 +38,9 @@ namespace FuelAppAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateFavourite(Favourite newfavourite)
         {
-            await _favouriteService.CreateFavouriteAsync(newfavourite);
+            var response = await _favouriteService.CreateFavouriteAsync(newfavourite);
 
-            return CreatedAtAction(nameof(GetFavouriteById), new { id = newfavourite.Id }, newfavourite);
+            return Ok(response);
         }
 
         // Get favourite by username
