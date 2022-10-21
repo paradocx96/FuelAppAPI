@@ -32,6 +32,10 @@ namespace FuelAppAPI.Services
         public async Task<Favourite> GetFavouriteByUsernameAsync(string username) =>
             await _favouriteCollection.Find(x => x.Username == username).FirstOrDefaultAsync();
 
+        //Get favourite by station Id
+        public async Task<Favourite> GetFavouriteByStationId(string id) =>
+           await _favouriteCollection.Find(x => x.StationId == id).FirstOrDefaultAsync();
+
         // Get favourite By Id
         public async Task<Favourite?> GetFavouriteByIdAsync(string id) => await _favouriteCollection.Find(res => res.Id == id).FirstOrDefaultAsync();
 
@@ -87,6 +91,10 @@ namespace FuelAppAPI.Services
 
             return jsonStationError;
         }
+
+        // Delete favourite
+        public async Task DeleteFavouriteAsync(string id) => await _favouriteCollection.DeleteOneAsync(res => res.StationId == id);
+
 
     }
 }
