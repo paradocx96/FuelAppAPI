@@ -25,14 +25,20 @@ namespace FuelAppAPI.Services
         }
 
         //get all logs
+        public async Task<List<FuelStationLogItem>> GetAsync() =>
+            await _fuelStationLogItemCollection.Find(_ => true).ToListAsync();
 
         //get a log by id
-
-        //get logs by owner's username
+        public async Task<FuelStationLogItem> GetAsync(string id) =>
+            await _fuelStationLogItemCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         //get logs by station id
+        public async Task<List<FuelStationLogItem>> GetByOwnerUsername(string stationId) =>
+            await _fuelStationLogItemCollection.Find(x => x.StationId == stationId).ToListAsync();
 
         //add a log
+        public async Task CreateAsync(FuelStationLogItem fuelStationLogItem) =>
+            await _fuelStationLogItemCollection.InsertOneAsync(fuelStationLogItem);
     }
 }
 
