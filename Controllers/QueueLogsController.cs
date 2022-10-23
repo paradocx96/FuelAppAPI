@@ -104,10 +104,18 @@ namespace FuelAppAPI.Controllers
         //endpoint to get log items by the station id
         [Route("[action]/{stationId}")]
         [HttpGet]
-        public async Task<List<QueueLogItem>> GetQueueLogItemsByStationId(string stationId)
+        public async Task<List<QueueLogItemDto>> GetQueueLogItemsByStationId(string stationId)
         {
-            var queueLogItems = await _queueLogService.GetByStationId(stationId); //get queue log items by username
-            return queueLogItems;
+            List<QueueLogItem> queueLogItems = await _queueLogService.GetByStationId(stationId); //get queue log items by username
+            List<QueueLogItemDto> queueLogItemDtos = new List<QueueLogItemDto>();
+
+            //go through all the queue log item model objects
+            foreach (QueueLogItem queueLogItem in queueLogItems)
+            {
+                QueueLogItemDto queueLogItemDto = QueueLogDtoConverter.convertModelToDtoWithId(queueLogItem);//convert the model to a DTO
+                queueLogItemDtos.Add(queueLogItemDto); //add the DTO to the DTO list
+            }
+            return queueLogItemDtos;
         }
 
         //adding queue log items is done via FuelStationController
