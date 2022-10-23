@@ -15,6 +15,7 @@ namespace FuelAppAPI.Services
 {
     public class FuelStationLogService
     {
+        //readonly collection for fuel station logs
         private readonly IMongoCollection<FuelStationLogItem> _fuelStationLogItemCollection;
         public FuelStationLogService(IOptions<FuelDatabaseSettings> fuelDatabaseSettings)
         {
@@ -22,6 +23,16 @@ namespace FuelAppAPI.Services
             var mongoDatabase = mongoClient.GetDatabase(fuelDatabaseSettings.Value.DatabaseName); //initialize mongo database
             _fuelStationLogItemCollection = mongoDatabase.GetCollection<FuelStationLogItem>(fuelDatabaseSettings.Value.FuelStationLogsCollectionName); //assign the collection
         }
+
+        //get all logs
+
+        //get a log by id
+
+        //get logs by owner's username
+
+        //get logs by station id
+
+        //add a log
     }
 }
 
