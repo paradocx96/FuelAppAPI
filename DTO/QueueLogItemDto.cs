@@ -12,6 +12,7 @@ namespace FuelAppAPI.DTO
         public string? Queue { get; set; }
         public string? Action { get; set; }  //join / leave
         public string? RefuelStatus { get; set; } //refuled / not-refueled / not-applicable
+        public DateTime? dateTime { get; set; }
     }
 }
 
