@@ -27,12 +27,12 @@ namespace FuelAppAPI.Services
             await _queueLogItemCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         //get logs by cutomer username
-        public async Task<QueueLogItem?> GetByUsername(string username) =>
-            await _queueLogItemCollection.Find(x => x.CustomerUsername == username).FirstOrDefaultAsync();
+        public async Task<List<QueueLogItem>> GetByUsername(string username) =>
+            await _queueLogItemCollection.Find(x => x.CustomerUsername == username).ToListAsync();
 
         //get logs by station id
-        public async Task<QueueLogItem?> GetByStatioId(string stationId) =>
-            await _queueLogItemCollection.Find(x => x.StationId == stationId).FirstOrDefaultAsync();
+        public async Task<List<QueueLogItem>> GetByStatioId(string stationId) =>
+            await _queueLogItemCollection.Find(x => x.StationId == stationId).ToListAsync();
 
         //add a log
         public async Task CreateAsync(QueueLogItem queueLogItem) =>
