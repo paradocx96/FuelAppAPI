@@ -4,7 +4,7 @@
  * IT19014128
  * A.M.W.W.R.L. Wataketiya
  * 
- * Model for Fuel Statio Log Item
+ * Model for Fuel Station Log Item
  */
 
 namespace FuelAppAPI.Models
