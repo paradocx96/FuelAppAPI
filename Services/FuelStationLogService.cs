@@ -20,7 +20,7 @@ namespace FuelAppAPI.Services
         {
             var mongoClient = new MongoClient(fuelDatabaseSettings.Value.ConnectionString); //initialize mongo client
             var mongoDatabase = mongoClient.GetDatabase(fuelDatabaseSettings.Value.DatabaseName); //initialize mongo database
-            _fuelStationLogItemCollection = mongoDatabase.GetCollection<FuelStationLogItem>(fuelDatabaseSettings.Value.QueueLogsCollectionName); //assign the collection
+            _fuelStationLogItemCollection = mongoDatabase.GetCollection<FuelStationLogItem>(fuelDatabaseSettings.Value.FuelStationLogsCollectionName); //assign the collection
         }
     }
 }
