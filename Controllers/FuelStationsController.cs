@@ -196,7 +196,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to increase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> IncrementPetrolQueueLength(string id, [FromBody] QueueLogItemDto queueLogItemDto)
+        public async Task<ActionResult> IncrementPetrolQueueLength(string id, [FromBody] QueueLogRequestDto queueLogRequestDto)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
 
@@ -208,8 +208,16 @@ namespace FuelAppAPI.Controllers
 
             await _fuelStationService.IncrementPetrolQueueLength(id); //incrementCount in the fuel station
 
-            //get the queue log item DTO into a queue log item model
-            QueueLogItem queueLogItem = QueueLogDtoConverter.convertDtoToModelWithoutId(queueLogItemDto);
+            //initialize a queue log item instance
+            QueueLogItem queueLogItem = new QueueLogItem();
+
+            //get the details from queueLogRequestDto and assign to queueLogItem
+            queueLogItem.CustomerUsername = queueLogRequestDto.CustomerUsername;
+            queueLogItem.StationId = queueLogRequestDto.StationId;
+            queueLogItem.StationLicense = queueLogRequestDto.StationLicense;
+            queueLogItem.StationName = queueLogRequestDto.StationName;
+            queueLogItem.RefuelStatus = queueLogRequestDto.RefuelStatus;
+
             //reassign the queue and the action
             queueLogItem.Queue = "petrol";
             queueLogItem.Action = "join";
