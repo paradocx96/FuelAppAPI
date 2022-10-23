@@ -25,13 +25,16 @@ namespace FuelAppAPI.Controllers
         private readonly FuelStationService _fuelStationService; //fuel station service
         private readonly FuelStationArchiveService _fuelStationArchiveService; // fuel station archive service
         private readonly QueueLogService _queueLogService; //queue log service
+        private readonly FuelStationLogService _fuelStationLogService; //fuel station log service
 
         //constructor
-        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService, QueueLogService queueLogService)
+        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService,
+            QueueLogService queueLogService, FuelStationLogService fuelStationLogService)
         {
             _fuelStationService = fuelStationService;
             _fuelStationArchiveService = fuelStationArchiveService;
             _queueLogService = queueLogService;
+            _fuelStationLogService = fuelStationLogService;
         }
 
         //endpoint to get all stations
