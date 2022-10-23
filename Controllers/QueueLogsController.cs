@@ -47,7 +47,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to get a log item by id
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<QueueLogItem>> Get(string id)
+        public async Task<ActionResult<QueueLogItemDto>> Get(string id)
         {
             var queueLogItem = await _queueLogService.GetAsync(id);
 
@@ -57,7 +57,31 @@ namespace FuelAppAPI.Controllers
             {
                 return NotFound();
             }
-            return queueLogItem;
+
+            QueueLogItem item = new QueueLogItem();
+            item = queueLogItem;
+            DateTime dateTime = item.dateTime ?? DateTime.Now; //using null coalsing operator
+
+            QueueLogItemDto queueLogItemDto = new QueueLogItemDto();
+            queueLogItemDto.Id = item.Id;
+            queueLogItemDto.CustomerUsername = item.CustomerUsername;
+            queueLogItemDto.StationId = item.StationId;
+            queueLogItemDto.StationLicense = item.StationLicense;
+            queueLogItemDto.StationName = item.StationName;
+            queueLogItemDto.Queue = item.Queue;
+            queueLogItemDto.Action = item.Action;
+            queueLogItemDto.RefuelStatus = item.RefuelStatus;
+            queueLogItemDto.dateTime = item.dateTime;
+
+            //set the date and time details seperately
+            queueLogItemDto.Year = dateTime.Year;
+            queueLogItemDto.Month = dateTime.Month;
+            queueLogItemDto.DayNumber = dateTime.Day;
+            queueLogItemDto.Hour = dateTime.Hour;
+            queueLogItemDto.Minute = dateTime.Minute;
+            queueLogItemDto.Second = dateTime.Second;
+
+            return queueLogItemDto;
         }
 
         //endpoint to get log items by the username
