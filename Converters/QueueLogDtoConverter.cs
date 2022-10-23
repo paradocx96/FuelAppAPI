@@ -63,6 +63,16 @@ namespace FuelAppAPI.Converters
             queueLogItemDto.Queue = queueLogItem.Queue;
             queueLogItemDto.Action = queueLogItem.Action;
             queueLogItemDto.RefuelStatus = queueLogItem.RefuelStatus;
+
+            //get the date time
+            DateTime dateTime = queueLogItem.dateTime ?? DateTime.Now;
+            //set the date and time details seperately
+            queueLogItemDto.Year = dateTime.Year;
+            queueLogItemDto.Month = dateTime.Month;
+            queueLogItemDto.DayNumber = dateTime.Day;
+            queueLogItemDto.Hour = dateTime.Hour;
+            queueLogItemDto.Minute = dateTime.Minute;
+            queueLogItemDto.Second = dateTime.Second;
             queueLogItemDto.dateTime = queueLogItem.dateTime;
 
             return queueLogItemDto;
@@ -82,6 +92,17 @@ namespace FuelAppAPI.Converters
             queueLogItemDto.Queue = queueLogItem.Queue;
             queueLogItemDto.Action = queueLogItem.Action;
             queueLogItemDto.RefuelStatus = queueLogItem.RefuelStatus;
+
+
+            //get the date time
+            DateTime dateTime = queueLogItem.dateTime ?? DateTime.Now;
+            //set the date and time details seperately
+            queueLogItemDto.Year = dateTime.Year;
+            queueLogItemDto.Month = dateTime.Month;
+            queueLogItemDto.DayNumber = dateTime.Day;
+            queueLogItemDto.Hour = dateTime.Hour;
+            queueLogItemDto.Minute = dateTime.Minute;
+            queueLogItemDto.Second = dateTime.Second;
             queueLogItemDto.dateTime = queueLogItem.dateTime;
 
             return queueLogItemDto;
