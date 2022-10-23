@@ -64,7 +64,7 @@ namespace FuelAppAPI.Controllers
         [HttpGet]
         public async Task<List<QueueLogItem>> GetQueueLogItemsByStationId(string stationId)
         {
-            var queueLogItems = await _queueLogService.GetByStatioId(stationId); //get queue log items by username
+            var queueLogItems = await _queueLogService.GetByStationId(stationId); //get queue log items by username
             return queueLogItems;
         }
 
