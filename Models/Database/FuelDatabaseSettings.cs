@@ -16,5 +16,5 @@ public class FuelDatabaseSettings : IFuelDatabaseSettings
 
     public string FuelStationArchivesCollectionName { get; set; } // Name for the fuel stations archive collection
 
-    private string QueueLogCollectionName { get; set; } // Name for the queue log collection
+    private string QueueLogsCollectionName { get; set; } // Name for the queue log collection
 }
