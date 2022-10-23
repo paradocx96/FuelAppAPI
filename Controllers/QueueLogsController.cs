@@ -8,6 +8,16 @@ using FuelAppAPI.Models;
 using FuelAppAPI.DTO;
 using FuelAppAPI.Converters;
 
+/*
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * 
+ * This is the controller for QueueLogItems
+ * 
+ * Adding queue log items is done via FuelStationController when incrementing or decrementing the queue length
+ * 
+ */
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FuelAppAPI.Controllers
