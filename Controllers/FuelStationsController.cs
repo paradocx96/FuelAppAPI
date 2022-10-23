@@ -24,12 +24,14 @@ namespace FuelAppAPI.Controllers
     {
         private readonly FuelStationService _fuelStationService; //fuel station service
         private readonly FuelStationArchiveService _fuelStationArchiveService; // fuel station archive service
+        private readonly QueueLogService _queueLogService; //queue log service
 
         //constructor
-        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService)
+        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService, QueueLogService queueLogService)
         {
             _fuelStationService = fuelStationService;
             _fuelStationArchiveService = fuelStationArchiveService;
+            _queueLogService = queueLogService;
         }
 
         //endpoint to get all stations
@@ -194,7 +196,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to increase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> IncrementPetrolQueueLength(string id)
+        public async Task<ActionResult> IncrementPetrolQueueLength(string id, [FromBody] QueueLogItemDto queueLogItemDto)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
 
@@ -204,7 +206,20 @@ namespace FuelAppAPI.Controllers
                 return NotFound();
             }
 
-            await _fuelStationService.IncrementPetrolQueueLength(id); //incrementCount
+            await _fuelStationService.IncrementPetrolQueueLength(id); //incrementCount in the fuel station
+
+            //get the queue log item DTO into a queue log item model
+            QueueLogItem queueLogItem = QueueLogDtoConverter.convertDtoToModelWithoutId(queueLogItemDto);
+            //reassign the queue and the action
+            queueLogItem.Queue = "petrol";
+            queueLogItem.Action = "join";
+
+            //set the current time to the log item's datetime
+            DateTime currentDateTime = DateTime.Now;
+            queueLogItem.dateTime = currentDateTime;
+
+            //create new log entry
+            await _queueLogService.CreateAsync(queueLogItem);
 
             return NoContent();
         }
