@@ -379,6 +379,21 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.UpdatePetrolStatus(id, "available");
+
+            //instantiate fuel log item
+            FuelStationLogItem fuelStationLogItem = new FuelStationLogItem();
+            //add the data
+            fuelStationLogItem.StationId = id;
+            fuelStationLogItem.FuelType = "petrol";
+            fuelStationLogItem.FuelStatus = "available";
+
+            //get current date time
+            DateTime currentDateTime = DateTime.Now;
+            fuelStationLogItem.DateTime = currentDateTime; //set the current date time
+
+            //create the log entry
+            await _fuelStationLogService.CreateAsync(fuelStationLogItem);
+
             return NoContent();
         }
 
