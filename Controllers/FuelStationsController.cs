@@ -216,6 +216,7 @@ namespace FuelAppAPI.Controllers
 
             //set the current time to the log item's datetime
             DateTime currentDateTime = DateTime.Now;
+            Console.WriteLine("Current Date Time : " + currentDateTime);
             queueLogItem.dateTime = currentDateTime;
 
             //create new log entry
