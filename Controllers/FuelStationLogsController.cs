@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using FuelAppAPI.Services;
 using FuelAppAPI.Models;
 using FuelAppAPI.DTO;
+using FuelAppAPI.Converters;
 
 /*
  * IT19014128
@@ -13,7 +14,7 @@ using FuelAppAPI.DTO;
  * 
  * This is the controller for FuelStationLogItems
  * 
- * Adding queue log items is done via FuelStationController when incrementing or decrementing the queue length
+ * Adding station log items is done via FuelStationController when marking fuel availability
  * 
  */
 
@@ -52,29 +53,25 @@ namespace FuelAppAPI.Controllers
         }
 
         //endpoint to get logs by station id
-        /*public async Task<List<FuelStationLogDto>> GetByStationId(string id)
+        [Route("[action]/{stationId}")]
+        [HttpGet]
+        public async Task<List<FuelStationLogDto>> GetByStationId(string stationId)
         {
-            List<FuelStationLogItem> fuelStationLogItems = new List<FuelStationLogItem>();
-            fuelStationLogItems = _fuelStationLogService.Get
-        }*/
+            List<FuelStationLogItem> fuelStationLogItems = await _fuelStationLogService.GetByStationId(stationId);
+            List<FuelStationLogDto> fuelStationLogDtos = new List<FuelStationLogDto>();
+            fuelStationLogItems = await _fuelStationLogService.GetByStationId(stationId);
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
+            //go through fuel station log items
+            foreach(FuelStationLogItem fuelStationLogItem in fuelStationLogItems)
+            {
+                FuelStationLogDto fuelStationLogDto = FuelStationLogDtoConverter.convertModelToDtoWithId(fuelStationLogItem);
+                fuelStationLogDtos.Add(fuelStationLogDto);
+            }
+
+            return fuelStationLogDtos;
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }
 
