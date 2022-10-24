@@ -44,7 +44,7 @@ namespace FuelAppAPI.Controllers
 
         // Update User
         [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> UpdateUser(string id, UserDto userDto)
+        public async Task<IActionResult> UpdateUser(string id, UserUpdateDto userDto)
         {
             // Calling async function made for get user by user id
             var userCheck = await _userService.GetAsync(id);
@@ -58,11 +58,11 @@ namespace FuelAppAPI.Controllers
             // Create new user object and assign values for update user
             User updatedUser = new User();
             updatedUser.Id = id;
-            updatedUser.Username = userDto.Username;
+            updatedUser.Username = userCheck.Username;
             updatedUser.FullName = userDto.FullName;
             updatedUser.Email = userDto.Email;
-            updatedUser.Password = userDto.Password;
-            updatedUser.Role = userDto.Role;
+            updatedUser.Password = userCheck.Password;
+            updatedUser.Role = userCheck.Role;
 
             // Calling async function made for update user
             await _userService.UpdateAsync(id, updatedUser);
