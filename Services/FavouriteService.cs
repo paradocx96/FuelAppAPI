@@ -24,10 +24,6 @@ namespace FuelAppAPI.Services
 
         }
 
-        //Create a new favourite
-       /* public async Task CreateFavouriteAsync(Favourite newfavourite) =>
-            await _favouriteCollection.InsertOneAsync(newfavourite);*/
-
         //Get favourite by username
         public async Task<Favourite> GetFavouriteByUsernameAsync(string username) =>
             await _favouriteCollection.Find(x => x.Username == username).FirstOrDefaultAsync();
@@ -51,12 +47,17 @@ namespace FuelAppAPI.Services
 
             try
             {
-                var filterStationId = Builders<BsonDocument>.Filter.Eq("StationId", favourite.StationId);
-                var documentUsername = await _collection.Find(filterStationId).FirstAsync();
+              
+                var filterBuilder = Builders<BsonDocument>.Filter;
+                var filter = filterBuilder.Eq("StationId", favourite.StationId) & filterBuilder.Eq("Username", favourite.Username);
 
-                if (documentUsername != null) {
+                var result = await _collection.Find(filter).FirstAsync();
+
+                if (result != null)
+                {
+                    
                     dynamic alreadyAvailableStation = new ExpandoObject();
-                    alreadyAvailableStation.message = "This station is already added";          
+                    alreadyAvailableStation.message = "This station is already added";
                     string jsonAlreadyAvailableStation = Newtonsoft.Json.JsonConvert.SerializeObject(alreadyAvailableStation);
 
                     return jsonAlreadyAvailableStation;
@@ -66,18 +67,21 @@ namespace FuelAppAPI.Services
             catch (InvalidOperationException)
             {
                 await _favouriteCollection.InsertOneAsync(favourite);
-                
-                var filterStationId = Builders<BsonDocument>.Filter.Eq("StationId", favourite.StationId);
-                var documentUsername = await _collection.Find(filterStationId).FirstAsync();
 
-                if (documentUsername != null)
+                var filterBuilder = Builders<BsonDocument>.Filter;
+                var filter = filterBuilder.Eq("StationId", favourite.StationId) & filterBuilder.Eq("Username", favourite.Username);
+
+                var result = await _collection.Find(filter).FirstAsync();
+
+                if (result != null)
                 {
                     dynamic newStation = new ExpandoObject();
-                    newStation.message = "Successfully Added!";             
+                    newStation.message = "Successfully Added!";
                     string jsonNewStation = Newtonsoft.Json.JsonConvert.SerializeObject(newStation);
 
                     return jsonNewStation;
                 }
+
                 dynamic newStationFail = new ExpandoObject();
                 newStationFail.message = "Something went wrong!";
                 string jsonNewStationFail = Newtonsoft.Json.JsonConvert.SerializeObject(newStationFail);
