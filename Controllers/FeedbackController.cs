@@ -56,7 +56,7 @@ namespace FuelAppAPI.Controllers
 
             await _feedbackService.UpdateFeedbackAsync(id, updateFeedback);
 
-            return NoContent();
+            return Ok("Successfully Updated!");
         }
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> DeleteFeedback(string id)
@@ -70,7 +70,7 @@ namespace FuelAppAPI.Controllers
 
             await _feedbackService.DeleteFeedbackAsync(id);
 
-            return Ok("Message : Successfully Deleted");
+            return Ok("Successfully Deleted!");
         }
 
 
