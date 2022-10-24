@@ -1,5 +1,19 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿/**
+ * EAD - FuelMe API
+ * 
+ * @author H.G. Malwatta - IT19240848
+ * 
+ */
+
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+
+/**
+ * @author H.G. Malwatta - IT19240848
+ * 
+ * This model class is used to create feedback objects
+ * 
+ */
 
 namespace FuelAppAPI.Models
 {
