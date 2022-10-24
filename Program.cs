@@ -13,7 +13,12 @@ builder.Services.AddSingleton<AuthService>();
 builder.Services.AddSingleton<FeedbackService>();
 builder.Services.AddSingleton<FuelStationService>();
 builder.Services.AddSingleton<FuelStationArchiveService>();
+
+builder.Services.AddSingleton<QueueLogService>();
+builder.Services.AddSingleton<FuelStationLogService>();
+
 builder.Services.AddSingleton<FavouriteService>();
+
 
 
 builder.Services.AddControllers();
