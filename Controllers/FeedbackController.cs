@@ -1,9 +1,22 @@
-﻿using FuelAppAPI.Models;
+﻿/**
+ * EAD - FuelMe API
+ * 
+ * @author H.G. Malwatta - IT19240848
+ * 
+ */
+
+using FuelAppAPI.Models;
 using FuelAppAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 
+/**
+ * @author H.G. Malwatta - IT19240848
+ * 
+ * This controller class is used to manipulate all feedback API related calls
+ * 
+ */
 namespace FuelAppAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -12,18 +25,35 @@ namespace FuelAppAPI.Controllers
     {
         private readonly FeedbackService _feedbackService;
 
+        /**
+         * Overloaded constroctor
+         * 
+         * @param feedbackService
+         */
         public FeedbackController(FeedbackService feedbackService) => _feedbackService = feedbackService;
-        
-        // Create Feedback
+
+        /**
+         * Create new feedback
+         * POST: api/Feedback
+         * 
+         * @param feedback
+         * @retun Task<IActionResult>
+         */
         [HttpPost]
         public async Task<IActionResult> CreateFeedback(Feedback feedback)
         {
             await _feedbackService.CreateFeedbackAsync(feedback);
 
+            //return created feedback
             return CreatedAtAction(nameof(GetFeedBackById), new {id = feedback.Id }, feedback);
         }
 
-        // Get Feedback By Id
+        /**
+         * Get feedback by id
+         * GET: api/Feedback/{id}
+         * 
+         * @retun Task<ActionResult<Feedback>>
+         */
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Feedback>> GetFeedBackById(string id)
         {
@@ -37,11 +67,24 @@ namespace FuelAppAPI.Controllers
             return feedback;
         }
 
-        // Get All Feedback
+        /**
+         * Get all feedbacks
+         * GET: api/Feedback/{id}
+         * 
+         * @retun Task<List<Feedback>>
+         */
         [HttpGet]
         public async Task<List<Feedback>> GetAllFeedbacks() => await _feedbackService.GetAllFeedbacksAsync();
 
-        // Update Feedback
+
+        /**
+         * Update Feedback
+         * PUT: api/Feedback/{id}
+         * 
+         * @param id
+         * @param updateFeedback
+         * @retun Task<IActionResult>
+         */
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> UpdateFeedback(string id, Feedback updateFeedback)
         {
@@ -58,6 +101,14 @@ namespace FuelAppAPI.Controllers
 
             return Ok("Successfully Updated!");
         }
+
+        /**
+         * Delete Feedback
+         * DELETE: api/Feedback/{id}
+         * 
+         * @param id
+         * @retun Task<IActionResult>
+         */
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> DeleteFeedback(string id)
         {
@@ -73,7 +124,13 @@ namespace FuelAppAPI.Controllers
             return Ok("Successfully Deleted!");
         }
 
-
+        /**
+         * Get all station feedback by id
+         * GET: api/Feedback/station/{id}
+         * 
+         * @param id
+         * @retun Task<ActionResult<List<Feedback>>>
+         */
         [HttpGet("station/{id}")]
         public async Task<ActionResult<List<Feedback>>> GetAllStationFeedbackById(string id)
         {
