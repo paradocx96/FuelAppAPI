@@ -1,10 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 
 /*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
-* Model class for Auth Request (Login)
-*/
+ * EAD - FuelMe APP API
+ *
+ * Model class for Auth Request (Login)
+ * 
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 namespace FuelAppAPI.Models.Auth
 {
     public class AuthenticateRequest

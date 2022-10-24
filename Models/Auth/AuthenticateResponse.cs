@@ -1,8 +1,11 @@
 /*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
-* Model class for Auth Response (Login)
-*/
+ * EAD - FuelMe APP API
+ *
+ * Model class for Auth Response (Login)
+ * 
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 
 namespace FuelAppAPI.Models.Auth
 {

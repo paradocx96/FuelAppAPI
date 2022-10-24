@@ -1,8 +1,11 @@
 /*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
-* Data Transfer Object for User
-*/
+ * EAD - FuelMe APP API
+ *
+ * Data Transfer Object for User
+ * 
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 
 namespace FuelAppAPI.DTO
 {

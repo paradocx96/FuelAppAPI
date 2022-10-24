@@ -1,8 +1,11 @@
 /*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
-* Model interface for Database configuration
-*/
+ * EAD - FuelMe APP API
+ *
+ * Model interface for Database configuration
+ * 
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 
 namespace FuelAppAPI.Models.Database
 {
