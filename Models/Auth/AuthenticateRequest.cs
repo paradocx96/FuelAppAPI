@@ -1,12 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace FuelAppAPI.Models.Auth;
+/*
+ * EAD - FuelMe APP API
+ *
+ * Model class for Auth Request (Login)
+ * 
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
 
-public class AuthenticateRequest
+namespace FuelAppAPI.Models.Auth
 {
-    [Required]
-    public string Username { get; set; }
-    
-    [Required]
-    public string Password { get; set; }
+    public class AuthenticateRequest
+    {
+        [Required] public string Username { get; set; }
+
+        [Required] public string Password { get; set; }
+    }
 }

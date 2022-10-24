@@ -1,4 +1,5 @@
-﻿/**
+
+/**
  * EAD - FuelMe API
  * 
  * @author H.G. Malwatta - IT19240848
@@ -6,6 +7,7 @@
  */
 
 using FuelAppAPI.Models;
+using FuelAppAPI.Models.Database;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -36,8 +38,8 @@ namespace FuelAppAPI.Services
             var monogClient = new MongoClient(fuelDatabaseSettings.Value.ConnectionString);
             var mongoDatabase = monogClient.GetDatabase(fuelDatabaseSettings.Value.DatabaseName);
 
-            _feedbackCollection = mongoDatabase.GetCollection<Feedback>("Feedback");
-            _collection = mongoDatabase.GetCollection<BsonDocument>("Feedback");
+            _feedbackCollection = mongoDatabase.GetCollection<Feedback>(fuelDatabaseSettings.Value.FeedbackCollectionName);
+            _collection = mongoDatabase.GetCollection<BsonDocument>(fuelDatabaseSettings.Value.FeedbackCollectionName);
         }
 
         /**

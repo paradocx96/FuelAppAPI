@@ -13,4 +13,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="DTO\" />
+    <None Remove="Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\" />
+    <Folder Include="Converters\" />
+  </ItemGroup>
 </Project>
