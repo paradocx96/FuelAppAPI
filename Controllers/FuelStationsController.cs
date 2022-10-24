@@ -24,12 +24,17 @@ namespace FuelAppAPI.Controllers
     {
         private readonly FuelStationService _fuelStationService; //fuel station service
         private readonly FuelStationArchiveService _fuelStationArchiveService; // fuel station archive service
+        private readonly QueueLogService _queueLogService; //queue log service
+        private readonly FuelStationLogService _fuelStationLogService; //fuel station log service
 
         //constructor
-        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService)
+        public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService,
+            QueueLogService queueLogService, FuelStationLogService fuelStationLogService)
         {
             _fuelStationService = fuelStationService;
             _fuelStationArchiveService = fuelStationArchiveService;
+            _queueLogService = queueLogService;
+            _fuelStationLogService = fuelStationLogService;
         }
 
         //endpoint to get all stations
@@ -194,7 +199,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to increase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> IncrementPetrolQueueLength(string id)
+        public async Task<ActionResult> IncrementPetrolQueueLength(string id, [FromBody] QueueLogRequestDto queueLogRequestDto)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
 
@@ -204,7 +209,29 @@ namespace FuelAppAPI.Controllers
                 return NotFound();
             }
 
-            await _fuelStationService.IncrementPetrolQueueLength(id); //incrementCount
+            await _fuelStationService.IncrementPetrolQueueLength(id); //incrementCount in the fuel station
+
+            //initialize a queue log item instance
+            QueueLogItem queueLogItem = new QueueLogItem();
+
+            //get the details from queueLogRequestDto and assign to queueLogItem
+            queueLogItem.CustomerUsername = queueLogRequestDto.CustomerUsername;
+            queueLogItem.StationId = queueLogRequestDto.StationId;
+            queueLogItem.StationLicense = queueLogRequestDto.StationLicense;
+            queueLogItem.StationName = queueLogRequestDto.StationName;
+            queueLogItem.RefuelStatus = "not-applicable";
+
+            //reassign the queue and the action
+            queueLogItem.Queue = "petrol";
+            queueLogItem.Action = "join";
+
+            //set the current time to the log item's datetime
+            DateTime currentDateTime = DateTime.Now;
+            Console.WriteLine("Current Date Time : " + currentDateTime);
+            queueLogItem.dateTime = currentDateTime;
+
+            //create new log entry
+            await _queueLogService.CreateAsync(queueLogItem);
 
             return NoContent();
         }
@@ -212,9 +239,9 @@ namespace FuelAppAPI.Controllers
         //endpoint to decrase petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> DecrementPetrolQueueLength(string id)
+        public async Task<ActionResult> DecrementPetrolQueueLength(string id, [FromBody] QueueLogRequestDto queueLogRequestDto)
         {
-            var fuelStation = await _fuelStationService.GetAsync(id);
+            FuelStation fuelStation = await _fuelStationService.GetAsync(id);
 
             //return not found of no fuel station is found for the username
             if (fuelStation is null)
@@ -223,13 +250,42 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.DecrementPetrolQueueLength(id);
+
+            //check if queue length is greater than zero
+            if(fuelStation.PetrolQueueLength > 0)
+            {
+                //initialize a queue log item instance
+                QueueLogItem queueLogItem = new QueueLogItem();
+
+                //get the details from queueLogRequestDto and assign to queueLogItem
+                queueLogItem.CustomerUsername = queueLogRequestDto.CustomerUsername;
+                queueLogItem.StationId = queueLogRequestDto.StationId;
+                queueLogItem.StationLicense = queueLogRequestDto.StationLicense;
+                queueLogItem.StationName = queueLogRequestDto.StationName;
+                queueLogItem.RefuelStatus = queueLogRequestDto.RefuelStatus;
+
+                //reassign the queue and the action
+                queueLogItem.Queue = "petrol";
+                queueLogItem.Action = "leave";
+
+                //set the current time to the log item's datetime
+                DateTime currentDateTime = DateTime.Now;
+                Console.WriteLine("Current Date Time : " + currentDateTime);
+                queueLogItem.dateTime = currentDateTime;
+
+                //create new log entry
+                await _queueLogService.CreateAsync(queueLogItem);
+            }
+
+            
+
             return NoContent();
         }
 
         //endpoint to increment diesel queue length
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> IncrementDieselQueueLength(string id)
+        public async Task<ActionResult> IncrementDieselQueueLength(string id, [FromBody] QueueLogRequestDto queueLogRequestDto)
         {
             var fuelStation = await _fuelStationService.GetAsync(id);
 
@@ -240,15 +296,39 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.IncrementDieselQueueLength(id);
+
+            //initialize a queue log item instance
+            QueueLogItem queueLogItem = new QueueLogItem();
+
+            //get the details from queueLogRequestDto and assign to queueLogItem
+            queueLogItem.CustomerUsername = queueLogRequestDto.CustomerUsername;
+            queueLogItem.StationId = queueLogRequestDto.StationId;
+            queueLogItem.StationLicense = queueLogRequestDto.StationLicense;
+            queueLogItem.StationName = queueLogRequestDto.StationName;
+            queueLogItem.RefuelStatus = "not-appliable";
+
+            //reassign the queue and the action
+            queueLogItem.Queue = "diesel";
+            queueLogItem.Action = "join";
+
+            //set the current time to the log item's datetime
+            DateTime currentDateTime = DateTime.Now;
+            Console.WriteLine("Current Date Time : " + currentDateTime);
+            queueLogItem.dateTime = currentDateTime;
+
+            //create new log entry
+            await _queueLogService.CreateAsync(queueLogItem);
+
+
             return NoContent();
         }
 
         //endpoint to decrement diesel queue length
         [Route("[action]/{id}")]
         [HttpPut]
-        public async Task<ActionResult> DecrementDieselQueueLength(string id)
+        public async Task<ActionResult> DecrementDieselQueueLength(string id, [FromBody] QueueLogRequestDto queueLogRequestDto)
         {
-            var fuelStation = await _fuelStationService.GetAsync(id);
+            FuelStation fuelStation = await _fuelStationService.GetAsync(id);
 
             //return not found of no fuel station is found for the username
             if (fuelStation is null)
@@ -257,6 +337,31 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.DecrementDieselQueueLength(id);
+
+            if(fuelStation.DieselQueueLength > 0)
+            {
+                //initialize a queue log item instance
+                QueueLogItem queueLogItem = new QueueLogItem();
+
+                //get the details from queueLogRequestDto and assign to queueLogItem
+                queueLogItem.CustomerUsername = queueLogRequestDto.CustomerUsername;
+                queueLogItem.StationId = queueLogRequestDto.StationId;
+                queueLogItem.StationLicense = queueLogRequestDto.StationLicense;
+                queueLogItem.StationName = queueLogRequestDto.StationName;
+                queueLogItem.RefuelStatus = queueLogRequestDto.RefuelStatus;
+
+                //reassign the queue and the action
+                queueLogItem.Queue = "diesel";
+                queueLogItem.Action = "leave";
+
+                //set the current time to the log item's datetime
+                DateTime currentDateTime = DateTime.Now;
+                Console.WriteLine("Current Date Time : " + currentDateTime);
+                queueLogItem.dateTime = currentDateTime;
+
+                //create new log entry
+                await _queueLogService.CreateAsync(queueLogItem);
+            }
             return NoContent();
         }
 
@@ -274,6 +379,21 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.UpdatePetrolStatus(id, "available");
+
+            //instantiate fuel station log item
+            FuelStationLogItem fuelStationLogItem = new FuelStationLogItem();
+            //add the data
+            fuelStationLogItem.StationId = id;
+            fuelStationLogItem.FuelType = "petrol";
+            fuelStationLogItem.FuelStatus = "available";
+
+            //get current date time
+            DateTime currentDateTime = DateTime.Now;
+            fuelStationLogItem.DateTime = currentDateTime; //set the current date time
+
+            //create the log entry
+            await _fuelStationLogService.CreateAsync(fuelStationLogItem);
+
             return NoContent();
         }
 
@@ -291,6 +411,22 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.UpdatePetrolStatus(id, "unavailable");
+
+            //instantiate fuel station log item
+            FuelStationLogItem fuelStationLogItem = new FuelStationLogItem();
+            //add the data
+            fuelStationLogItem.StationId = id;
+            fuelStationLogItem.FuelType = "petrol";
+            fuelStationLogItem.FuelStatus = "unavailable";
+
+            //get current date time
+            DateTime currentDateTime = DateTime.Now;
+            fuelStationLogItem.DateTime = currentDateTime; //set the current date time
+
+            //create the log entry
+            await _fuelStationLogService.CreateAsync(fuelStationLogItem);
+
+
             return NoContent();
         }
 
@@ -308,6 +444,22 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.UpdateDieselStatus(id, "available");
+
+            //instantiate fuel station log item
+            FuelStationLogItem fuelStationLogItem = new FuelStationLogItem();
+            //add the data
+            fuelStationLogItem.StationId = id;
+            fuelStationLogItem.FuelType = "diesel";
+            fuelStationLogItem.FuelStatus = "available";
+
+            //get current date time
+            DateTime currentDateTime = DateTime.Now;
+            fuelStationLogItem.DateTime = currentDateTime; //set the current date time
+
+            //create the log entry
+            await _fuelStationLogService.CreateAsync(fuelStationLogItem);
+
+
             return NoContent();
         }
 
@@ -325,6 +477,22 @@ namespace FuelAppAPI.Controllers
             }
 
             await _fuelStationService.UpdateDieselStatus(id, "unavailable");
+
+            //instantiate fuel station log item
+            FuelStationLogItem fuelStationLogItem = new FuelStationLogItem();
+            //add the data
+            fuelStationLogItem.StationId = id;
+            fuelStationLogItem.FuelType = "diesel";
+            fuelStationLogItem.FuelStatus = "unavailable";
+
+            //get current date time
+            DateTime currentDateTime = DateTime.Now;
+            fuelStationLogItem.DateTime = currentDateTime; //set the current date time
+
+            //create the log entry
+            await _fuelStationLogService.CreateAsync(fuelStationLogItem);
+
+
             return NoContent();
         }
 
