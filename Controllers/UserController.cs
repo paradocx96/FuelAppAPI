@@ -1,14 +1,20 @@
-﻿using FuelAppAPI.DTO;
+﻿/*
+ * EAD - FuelMe APP API
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
+using FuelAppAPI.DTO;
 using FuelAppAPI.Models;
 using FuelAppAPI.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 
 /*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
 * API Controller for User
+*
+* @author IT19180526 - S.A.N.L.D. Chandrasiri
+* @version 1.0
 */
 namespace FuelAppAPI.Controllers
 {
@@ -16,17 +22,31 @@ namespace FuelAppAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        // Defined User Service
         private readonly UserService _userService;
 
+        // Constructor
         public UserController(UserService userService) =>
             _userService = userService;
 
-        // Get All Users
+        /**
+         * Get All Users
+         * GET: api/User
+         *
+         * @return Task<List<User>>
+         * @see #GetUsers()
+         */
         [HttpGet]
         public async Task<List<User>> GetUsers() =>
             await _userService.GetAsync();
 
-        // Get User By Id
+        /**
+         * Get User By Id
+         * GET: api/User/{id}
+         *
+         * @return Task<ActionResult<User>>
+         * @see #GetUserById(string id)
+         */
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<User>> GetUserById(string id)
         {
@@ -42,7 +62,13 @@ namespace FuelAppAPI.Controllers
             return user;
         }
 
-        // Update User
+        /**
+         * Update User
+         * PUT: api/User/{id}
+         *
+         * @return Task<IActionResult>
+         * @see #UpdateUser(string id, UserUpdateDto userDto)
+         */
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> UpdateUser(string id, UserUpdateDto userDto)
         {
@@ -70,7 +96,13 @@ namespace FuelAppAPI.Controllers
             return NoContent();
         }
 
-        // Delete User
+        /**
+         * Delete User
+         * DELETE: api/User/{id}
+         *
+         * @return Task<IActionResult>
+         * @see #DeleteUser(string id)
+         */
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
@@ -88,8 +120,14 @@ namespace FuelAppAPI.Controllers
 
             return NoContent();
         }
-        
-        // Get Users By Role
+
+        /**
+         * Get User By Role
+         * GET: api/User/role/{role}
+         *
+         * @return Task<ActionResult<List<User>>>
+         * @see #GetUsersByRole(string role)
+         */
         [HttpGet("role/{role}")]
         public async Task<ActionResult<List<User>>> GetUsersByRole(string role)
         {

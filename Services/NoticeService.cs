@@ -1,19 +1,27 @@
+/*
+ * EAD - FuelMe APP API
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 using FuelAppAPI.Models;
 using FuelAppAPI.Models.Database;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
 /*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
-* Service class for Notice that handle database operation 
+* Service class for Notice that handle database operation
+*
+* @author IT19180526 - S.A.N.L.D. Chandrasiri
+* @version 1.0
 */
 namespace FuelAppAPI.Services
 {
     public class NoticeService
     {
+        // Database collections for Notice
         private readonly IMongoCollection<Notice> _noticesCollection;
         private readonly IMongoCollection<BsonDocument> _collection;
 
@@ -30,36 +38,70 @@ namespace FuelAppAPI.Services
             _collection = mongoDatabase.GetCollection<BsonDocument>(fuelDatabaseSettings.Value.NoticeCollectionName);
         }
 
-        // Get All Notices
+        /**
+         * This method handle the get all notices operation
+         *
+         * @return Task<List<Notice>>
+         * @see #GetAsync()
+         */
         public async Task<List<Notice>> GetAsync() =>
             await _noticesCollection.Find(_ => true).ToListAsync();
 
-        // Get Notice By Id
+        /**
+         * This method handle the get notice by id operation
+         *
+         * @return Task<Notice?>
+         * @see #GetAsync(string id)
+         */
         public async Task<Notice?> GetAsync(string id) =>
             await _noticesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-        // Create Notice
+        /**
+         * This method handle the create notice operation
+         *
+         * @return Task
+         * @see #CreateAsync(Notice newNotice)
+         */
         public async Task CreateAsync(Notice newNotice) =>
             await _noticesCollection.InsertOneAsync(newNotice);
 
-        // Update Notice
+        /**
+         * This method handle the update notice operation
+         *
+         * @return Task
+         * @see #UpdateAsync(string id, Notice updateNotice)
+         */
         public async Task UpdateAsync(string id, Notice updateNotice) =>
             await _noticesCollection.ReplaceOneAsync(x => x.Id == id, updateNotice);
 
-        // Delete Notice
+        /**
+         * This method handle the delete notice operation
+         *
+         * @return Task
+         * @see #RemoveAsync(string id)
+         */
         public async Task RemoveAsync(string id) =>
             await _noticesCollection.DeleteOneAsync(x => x.Id == id);
 
-        // Get All Notices By Station Id
+        /**
+         * This method handle the get notices by station id operation
+         *
+         * @return List<Notice>
+         * @see #GetNoticesByStationId(string id)
+         */
         public List<Notice> GetNoticesByStationId(string id)
         {
+            // Create filter for to get notice by station id
             var filter = Builders<BsonDocument>.Filter.Eq("StationId", id);
             var cursor = _collection.Find(filter).ToCursor();
 
+            // Create notice list object
             var notices = new List<Notice>();
-            
+
+            // Add notices to arraylist get from cursor object
             foreach (var document in cursor.ToEnumerable())
             {
+                // Add notice to arraylist
                 notices.Add(new Notice
                 {
                     Id = document[0].ToString()!,
@@ -73,17 +115,26 @@ namespace FuelAppAPI.Services
 
             return notices;
         }
-        
-        // Get All Notices By Author (username)
+
+        /**
+         * This method handle the get notices by author (username) operation
+         *
+         * @return List<Notice>
+         * @see #GetNoticesByAuthor(string author)
+         */
         public List<Notice> GetNoticesByAuthor(string author)
         {
+            // Create filter for to get notice by author (username) 
             var filter = Builders<BsonDocument>.Filter.Eq("Author", author);
             var cursor = _collection.Find(filter).ToCursor();
 
+            // Create notice list object
             var notices = new List<Notice>();
-            
+
+            // Add notices to arraylist get from cursor object
             foreach (var document in cursor.ToEnumerable())
             {
+                // Add notice to arraylist
                 notices.Add(new Notice
                 {
                     Id = document[0].ToString()!,

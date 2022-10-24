@@ -1,15 +1,21 @@
+/*
+ * EAD - FuelMe APP API
+ *
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 using FuelAppAPI.DTO;
 using FuelAppAPI.Models;
 using FuelAppAPI.Models.Auth;
 using FuelAppAPI.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 
 /*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
 * API Controller for Auth
+*
+* @author IT19180526 - S.A.N.L.D. Chandrasiri
+* @version 1.0
 */
 namespace FuelAppAPI.Controllers
 {
@@ -17,12 +23,20 @@ namespace FuelAppAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        // Defined Auth Service
         private readonly AuthService _authService;
 
+        // Constructor
         public AuthController(AuthService authService) =>
             _authService = authService;
 
-        // User Login
+        /**
+         * User Login
+         * POST: api/Auth/login
+         *
+         * @return IActionResult
+         * @see #UserLogin(AuthenticateRequest request)
+         */
         [HttpPost("login")]
         public IActionResult UserLogin(AuthenticateRequest request)
         {
@@ -32,7 +46,14 @@ namespace FuelAppAPI.Controllers
             return Ok(response);
         }
 
-        // User Register
+
+        /**
+         * User Register
+         * POST: api/Auth/register
+         * 
+         * @return Task<IActionResult>
+         * @see #UserRegister(UserDto userDto)
+         */
         [HttpPost("register")]
         public async Task<IActionResult> UserRegister(UserDto userDto)
         {
@@ -43,7 +64,7 @@ namespace FuelAppAPI.Controllers
             user.Email = userDto.Email;
             user.Password = userDto.Password;
             user.Role = userDto.Role;
-            
+
             // Calling async function made for create user
             var response = await _authService.UserRegistration(user);
 
