@@ -133,6 +133,7 @@ namespace FuelAppAPI.Controllers
         //endpoint to delete the station
         //the main entry is deleted
         //an archive entry is added in the database
+        //feedbck, notices and favourite entries relating to the station id are deleted
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
@@ -252,7 +253,7 @@ namespace FuelAppAPI.Controllers
             return NoContent();
         }
 
-        //endpoint to decrase petrol queue length
+        //endpoint to decrement petrol queue length
         [Route("[action]/{id}")]
         [HttpPut]
         public async Task<ActionResult> DecrementPetrolQueueLength(string id, [FromBody] QueueLogRequestDto queueLogRequestDto)

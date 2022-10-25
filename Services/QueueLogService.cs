@@ -4,6 +4,13 @@ using FuelAppAPI.Models.Database;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
+/*
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * 
+ * The service class for handling quue logs
+ */
+
 namespace FuelAppAPI.Services
 {
     public class QueueLogService

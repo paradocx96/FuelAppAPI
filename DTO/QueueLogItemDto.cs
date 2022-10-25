@@ -1,4 +1,10 @@
 ﻿using System;
+/*
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * 
+ * DTO for queue log item
+ */
 namespace FuelAppAPI.DTO
 {
     public class QueueLogItemDto
