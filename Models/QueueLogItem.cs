@@ -2,6 +2,13 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
+/*
+ * IT19014128
+ * A.M.W.W.R.L. Wataketiya
+ * 
+ * Model class for Queue Log item
+ */
+
 namespace FuelAppAPI.Models
 {
     public class QueueLogItem
