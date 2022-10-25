@@ -166,5 +166,51 @@ namespace FuelAppAPI.Services
         public async Task DeleteFavouriteAsync(string id) => await _favouriteCollection.DeleteOneAsync(res => res.StationId == id);
 
 
+        /**
+         * Delete favourites by station Id async
+         * 
+         * @param id
+         * @retun List<string>
+         */
+        public async Task<string> DeleteFavouriteByStationIdAsync(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("StationId", id);
+
+                var result = await _collection.DeleteManyAsync(filter);
+
+                if (result == null)
+                {
+                    //If result is not null, retun error message
+                    dynamic errorMsg = new ExpandoObject();
+                    errorMsg.message = "Some thing went wrong!";
+                    string jsonErrorMsg = Newtonsoft.Json.JsonConvert.SerializeObject(errorMsg);
+
+                    return jsonErrorMsg;
+                }
+                else
+                {
+                    //If result is not null, retun success message
+                    dynamic successMsg = new ExpandoObject();
+                    successMsg.message = "Successfully deleted!";
+                    string jsonSuccessMsg = Newtonsoft.Json.JsonConvert.SerializeObject(successMsg);
+
+                    return jsonSuccessMsg;
+                }
+            }
+            else
+            {
+                //If result is not null, retun success message
+                dynamic errorMsg = new ExpandoObject();
+                errorMsg.message = "Station Id is not valid!";
+                string jsonErrorMsg = Newtonsoft.Json.JsonConvert.SerializeObject(errorMsg);
+
+                return jsonErrorMsg;
+            }
+            
+
+        }
+
     }
 }
