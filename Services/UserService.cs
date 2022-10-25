@@ -15,7 +15,11 @@ using MongoDB.Driver;
 * Service class for User that handle database operation
 *
 * @author IT19180526 - S.A.N.L.D. Chandrasiri
-* @version 1.0
+* @version 1.0 
+*
+* Reference:
+* https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio
+* https://mongodb.github.io/mongo-csharp-driver/
 */
 namespace FuelAppAPI.Services
 {

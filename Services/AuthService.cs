@@ -18,6 +18,10 @@ using System.Dynamic;
 *
 * @author IT19180526 - S.A.N.L.D. Chandrasiri
 * @version 1.0
+*
+* Reference:
+* https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio
+* https://mongodb.github.io/mongo-csharp-driver/
 */
 namespace FuelAppAPI.Services
 {
