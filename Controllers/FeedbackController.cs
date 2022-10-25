@@ -144,5 +144,27 @@ namespace FuelAppAPI.Controllers
             return feedback;
         }
 
+        /**
+         * Delete Feedback by station Id
+         * DELETE: api/Feedback/DeleteFeedbacksByStationId/{id}
+         * 
+         * @param id
+         * @retun Task<IActionResult>
+         */
+        [Route("[action]/{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFeedbacksByStationId(string id)
+        {
+
+            var feedback = await _feedbackService.DeleteFeeedbackByStationIdAsync(id);
+
+            if (feedback is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(feedback);
+        }
+
     }
 }

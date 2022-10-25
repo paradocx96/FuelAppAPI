@@ -120,6 +120,39 @@ namespace FuelAppAPI.Services
   
         }
 
+        /**
+         * Delete Feedbacks by station Id async
+         * 
+         * @param id
+         * @retun List<string>
+         */
+        public async Task<string> DeleteFeeedbackByStationIdAsync(string id)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("StationId", id);
+
+            var result = await _collection.DeleteManyAsync(filter);
+
+            if (result == null)
+            {
+                //If result is not null, retun error message
+                dynamic errorMsg = new ExpandoObject();
+                errorMsg.message = "Some thing went wrong!";
+                string jsonErrorMsg = Newtonsoft.Json.JsonConvert.SerializeObject(errorMsg);
+
+                return jsonErrorMsg;
+            }
+            else
+            {
+                //If result is not null, retun success message
+                dynamic successMsg = new ExpandoObject();
+                successMsg.message = "Successfully deleted!";
+                string jsonSuccessMsg = Newtonsoft.Json.JsonConvert.SerializeObject(successMsg);
+
+                return jsonSuccessMsg;
+            }
+
+        }
+
     }
 }
  
