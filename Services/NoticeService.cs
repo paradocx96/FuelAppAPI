@@ -5,6 +5,7 @@
  * @version 1.0
  */
 
+using System.Dynamic;
 using FuelAppAPI.Models;
 using FuelAppAPI.Models.Database;
 using Microsoft.Extensions.Options;
@@ -147,6 +148,38 @@ namespace FuelAppAPI.Services
             }
 
             return notices;
+        }
+        
+        /**
+         * This method handle the delete notice by station id operation
+         *
+         * @param id - string
+         * @return Task<string>
+         * @see #RemoveAsyncByStationId(string id)
+         */
+        public async Task<string> RemoveAsyncByStationId(string id)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("StationId", id);
+            var result = await _collection.DeleteManyAsync(filter);
+
+            if (result != null)
+            {
+                dynamic jsonBody = new ExpandoObject();
+                jsonBody.message = "Successfully deleted!";
+                jsonBody.status = true;
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonBody);
+
+                return json;
+            }
+            else
+            {
+                dynamic jsonBody = new ExpandoObject();
+                jsonBody.message = "Deletion Error!";
+                jsonBody.status = false;
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonBody);
+
+                return json;
+            }
         }
     }
 }

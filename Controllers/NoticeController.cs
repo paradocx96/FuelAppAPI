@@ -188,5 +188,22 @@ namespace FuelAppAPI.Controllers
 
             return notices;
         }
+        
+        /**
+         * Delete Notices By Station Id
+         * DELETE: api/Notice/station/{id}
+         *
+         * @param id - string
+         * @return Task<IActionResult>
+         * @see #DeleteNoticeByStationId(string id)
+         */
+        [HttpDelete("station/{id}")]
+        public async Task<IActionResult> DeleteNoticeByStationId(string id)
+        {
+            // Calling async function made for delete notice by station id
+            var result = await _noticeService.RemoveAsyncByStationId(id);
+
+            return Ok(result);
+        }
     }
 }
