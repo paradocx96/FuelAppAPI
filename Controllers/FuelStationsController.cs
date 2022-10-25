@@ -26,15 +26,22 @@ namespace FuelAppAPI.Controllers
         private readonly FuelStationArchiveService _fuelStationArchiveService; // fuel station archive service
         private readonly QueueLogService _queueLogService; //queue log service
         private readonly FuelStationLogService _fuelStationLogService; //fuel station log service
+        private readonly FavouriteService _favouriteService; //favourite service
+        private readonly FeedbackService _feedbackService; //feedback service
+        private readonly NoticeService _noticeService; //notice service
 
         //constructor
         public FuelStationsController(FuelStationService fuelStationService, FuelStationArchiveService fuelStationArchiveService,
-            QueueLogService queueLogService, FuelStationLogService fuelStationLogService)
+            QueueLogService queueLogService, FuelStationLogService fuelStationLogService,
+            FavouriteService favouriteService, FeedbackService feedbackService, NoticeService noticeService)
         {
             _fuelStationService = fuelStationService;
             _fuelStationArchiveService = fuelStationArchiveService;
             _queueLogService = queueLogService;
             _fuelStationLogService = fuelStationLogService;
+            _favouriteService = favouriteService;
+            _feedbackService = feedbackService;
+            _noticeService = noticeService;
         }
 
         //endpoint to get all stations
@@ -152,6 +159,15 @@ namespace FuelAppAPI.Controllers
 
             // create archive entry
             await _fuelStationArchiveService.CreateAsync(fuelStationArchive);
+
+            //delete all favourite entries relating to this station id
+            await _favouriteService.DeleteFavouriteByStationIdAsync(id);
+
+            //delete all feedback entries relating to this station id
+            await _feedbackService.DeleteFeeedbackByStationIdAsync(id);
+
+            //delete all notice entries relating to this station id
+            await _noticeService.RemoveAsyncByStationId(id);
 
             //delete fuel station entry from main collection
             await _fuelStationService.DeleteAsync(id);
