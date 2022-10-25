@@ -9,6 +9,10 @@ using MongoDB.Driver;
  * A.M.W.W.R.L. Wataketiya
  * 
  * Service class for Fuel station logs
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * 
  */
 
 namespace FuelAppAPI.Services

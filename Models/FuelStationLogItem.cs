@@ -7,6 +7,10 @@ using MongoDB.Bson.Serialization.Attributes;
  * A.M.W.W.R.L. Wataketiya
  * 
  * Model for Fuel Station Log Item
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * 
  */
 
 namespace FuelAppAPI.Models

@@ -14,6 +14,11 @@ using static MongoDB.Driver.WriteConcern;
  * 
  * Service class for fuel station archive
  * When deleting a fuel station entry an arhive entry is entered using this service
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * 
+ * 
  */
 namespace FuelAppAPI.Services
 {

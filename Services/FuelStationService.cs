@@ -14,6 +14,10 @@ using static MongoDB.Driver.WriteConcern;
  * A.M.W.W.R.L. Wataketiya
  * 
  * This is the service class for fuel stations where the mongodb connections are handled
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * 
  */
 
 namespace FuelAppAPI.Services

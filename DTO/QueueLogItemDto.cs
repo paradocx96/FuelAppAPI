@@ -4,6 +4,11 @@
  * A.M.W.W.R.L. Wataketiya
  * 
  * DTO for queue log item
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * 
+ * 
  */
 namespace FuelAppAPI.DTO
 {

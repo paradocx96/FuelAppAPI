@@ -7,6 +7,9 @@ using MongoDB.Bson.Serialization.Attributes;
  * A.M.W.W.R.L. Wataketiya
  * 
  * Model class for Queue Log item
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
  */
 
 namespace FuelAppAPI.Models

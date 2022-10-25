@@ -8,6 +8,9 @@ using FuelAppAPI.Models;
  * A.M.W.W.R.L. Watketiya
  * 
  * This class does converssions between fuel station DTOs and fuel station models
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
  */
 
 namespace FuelAppAPI.Converters
