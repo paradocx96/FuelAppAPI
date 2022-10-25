@@ -15,6 +15,13 @@ using Microsoft.AspNetCore.Mvc;
  * A.M.W.W.R.L. Wataketiya
  * Controller for the fuel stations
  * Endpoints are handled here
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * https://youtu.be/Xuz0ZUh1OG0
+ * https://youtu.be/PA7hvoxHlEY
+ * https://youtu.be/gf2PqCtXduA
+ * 
  */
 namespace FuelAppAPI.Controllers
 {

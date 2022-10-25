@@ -16,6 +16,12 @@ using FuelAppAPI.Converters;
  * 
  * Adding station log items is done via FuelStationController when marking fuel availability
  * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * https://youtu.be/Xuz0ZUh1OG0
+ * https://youtu.be/PA7hvoxHlEY
+ * https://youtu.be/gf2PqCtXduA
+ * 
  */
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

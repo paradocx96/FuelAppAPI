@@ -7,6 +7,9 @@ using FuelAppAPI.DTO;
  * IT19014128
  * A.M.W.W.R.L. Wataketiya
  * Converter for QueueLogItem model and DTO
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
  */
 
 namespace FuelAppAPI.Converters

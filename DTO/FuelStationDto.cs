@@ -4,7 +4,9 @@ namespace FuelAppAPI.DTO
     /*
      * IT19014128
      * A.M.W.W.R.L. Wataketiya
-     The Data Transfer Object for Fuel Station
+     * The Data Transfer Object for Fuel Station
+     * References:
+     * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
      */
     public class FuelStationDto
     {

@@ -9,6 +9,11 @@ using MongoDB.Driver;
  * A.M.W.W.R.L. Wataketiya
  * 
  * The service class for handling quue logs
+ * 
+ * References:
+ * https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0
+ * 
+ * 
  */
 
 namespace FuelAppAPI.Services
