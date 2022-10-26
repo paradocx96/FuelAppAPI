@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿/*
+ * EAD - FuelMe APP API
+ *
+ * API Controller for API Root
+ * 
+ * @author IT19180526 - S.A.N.L.D. Chandrasiri
+ * @version 1.0
+ */
+
 using Microsoft.AspNetCore.Mvc;
 using System.Dynamic;
 
-/*
-* IT19180526
-* S.A.N.L.D. Chandrasiri
-* API Controller for API Root
-*/
 namespace FuelAppAPI.Controllers
 {
     [Route("/")]
